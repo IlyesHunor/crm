@@ -6,6 +6,9 @@ use app\controllers\FrontSideController;
 use app\helpers\DateHelper;
 use app\helpers\PermissionHelper;
 use app\helpers\PostHelper;
+use app\modules\Notifications\helpers\NotificationHelper;
+use app\modules\Notifications\models\NotificationsModel;
+use app\modules\Practices\helpers\PracticeHelper;
 use app\modules\Practices\models\ContractTemplatesModel;
 use app\modules\Practices\models\PracticesModel;
 use app\modules\Practices\models\PracticeSubscribersModel;
@@ -31,12 +34,6 @@ class DefaultController extends FrontSideController
         $this->Load_practices();
 
         return $this->Render_view('index');
-    }
-
-    private function Load_practices()
-    {
-        $this->data["total_items"]  = PracticesModel::Count_where_is_enabled();
-        $this->data["practices"]    = PracticesModel::Get_list_where_is_enabled();
     }
 
     public function actionSubscribed_practices()
@@ -221,6 +218,7 @@ class DefaultController extends FrontSideController
         }
 
         $this->Save_generated_contract();
+        $this->Try_to_send_notification_to_company();
     }
 
     private function Validate_generate()
@@ -255,5 +253,50 @@ class DefaultController extends FrontSideController
         }
 
         $model->updateAttributes( $data );
+    }
+
+    private function Try_to_send_notification_to_company()
+    {
+        if ( empty( $this->data["practice_assn"] ) )
+        {
+            return;
+        }
+
+        $practice_details = PracticesModel::Get_by_item_id( $this->data["practice_assn"]->practice_id );
+
+        if( empty( $practice_details ) )
+        {
+            return;
+        }
+
+        $this->data["practice_details"] = $practice_details;
+
+        $this->Send_notification_to_company();
+    }
+
+    private function Send_notification_to_company()
+    {
+        if( empty( $this->data["practice_details"] ) || empty( $this->data["practice_assn"] ) )
+        {
+            return;
+        }
+
+        $student_details = UsersModel::Get_by_item_id( $this->data["practice_assn"]->user_id );
+
+        $data = array(
+            "added_user_id" => $this->data["practice_details"]->user_id,
+            "user_id"       => $this->data["practice_details"]->user_id,
+            "name"          => NotificationHelper::Get_notification_name_for_generated_contract(),
+            "title"         => NotificationHelper::Get_notification_title( $this->data["practice_details"], $student_details ),
+            "link"          => PracticeHelper::Get_view_url( $this->data["practice_details"] ),
+            "insert_date"   => DateHelper::Get_datetime(),
+            "is_viewed"     => 0,
+            "is_deleted"    => 0,
+        );
+
+        $notification               = new NotificationsModel();
+        $notification->attributes   = $data;
+
+        $notification->save( false );
     }
 }

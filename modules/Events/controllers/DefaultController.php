@@ -3,7 +3,9 @@
 namespace app\modules\Events\controllers;
 
 use app\controllers\FrontSideController;
+use app\helpers\PermissionHelper;
 use app\modules\Events\models\EventsModel;
+use app\modules\Users\helpers\UserHelper;
 use yii\web\Controller;
 
 /**
@@ -22,9 +24,20 @@ class DefaultController extends FrontSideController
         return $this->Render_view( 'index' );
     }
 
-    private function Load_events()
+    public function actionMine()
     {
-        $this->data["total_items"]  = EventsModel::Count_where_is_enabled_and_public();
-        $this->data["events"]       = EventsModel::Get_list_where_is_enabled_and_public();
+        if( PermissionHelper::Is_student() )
+        {
+            return;
+        }
+
+        $this->Load_added_events();
+
+        return $this->Render_view('index');
+    }
+
+    private function Load_added_events()
+    {
+        $this->data["events"] = EventsModel::Get_list_by_user_id( UserHelper::Get_user_id() );
     }
 }

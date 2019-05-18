@@ -5,16 +5,18 @@ namespace app\controllers;
 use app\helpers\GetHelper;
 use app\helpers\PostHelper;
 use app\modules\Events\models\EventCategoriesModel;
+use app\modules\Events\models\EventsModel;
 use app\modules\Practices\models\PracticesModel;
 use app\modules\Users\helpers\UserHelper;
 use app\modules\Users\models\UsersModel;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\Response;
 
 class FrontSideController extends Controller
 {
-    public $data = array();
+    public $data                = array();
     public $default_date_format = "Y-m-d";
 
     public function Render_view( $view )
@@ -102,5 +104,26 @@ class FrontSideController extends Controller
     protected function Set_success_message( $message )
     {
         Yii::$app->session->setFlash('success', $message, false );
+    }
+
+    protected function Show_result_with_json( $result )
+    {
+        $this->data["result"]       = $result;
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        Yii::$app->response->data   = Yii::$app->controller->renderPartial( "//partials/ajax/json", $this->data );
+
+        Yii::$app->end();
+    }
+
+    protected function Load_practices( $limit = null )
+    {
+        $this->data["total_items"]  = PracticesModel::Count_where_is_enabled();
+        $this->data["practices"]    = PracticesModel::Get_list_where_is_enabled( $limit );
+    }
+
+    protected function Load_events( $limit = null )
+    {
+        $this->data["total_items"]  = EventsModel::Count_where_is_enabled_and_public();
+        $this->data["events"]       = EventsModel::Get_list_where_is_enabled_and_public( $limit );
     }
 }

@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use yii\bootstrap\Nav;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
@@ -12,6 +13,7 @@ use app\models\ContactForm;
 
 class SiteController extends FrontSideController
 {
+    /*
     /**
      * {@inheritdoc}
      */
@@ -61,18 +63,9 @@ class SiteController extends FrontSideController
      */
     public function actionIndex()
     {
-        return $this->render('index');
-    }
+        $this->Load_events( 3 );
+        $this->Load_practices( 3 );
 
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
+        return $this->Render_view('index');
     }
 }

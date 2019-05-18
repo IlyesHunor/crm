@@ -106,7 +106,7 @@ class PracticesModel extends \yii\db\ActiveRecord
             ->one();
     }
 
-    public static function Get_list_where_is_enabled()
+    public static function Get_list_where_is_enabled( $limit = null )
     {
         return self::find()
             ->andOnCondition(
@@ -115,6 +115,7 @@ class PracticesModel extends \yii\db\ActiveRecord
                     "is_deleted"    => 0,
                 )
             )
+            ->limit( $limit )
             ->all();
     }
 

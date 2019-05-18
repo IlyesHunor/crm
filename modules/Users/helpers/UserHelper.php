@@ -39,6 +39,16 @@ class UserHelper
         return ( ! empty( $user ) ? $user->first_name . " " .$user->last_name : false );
     }
 
+    public static function Get_user_name_by_user( $user )
+    {
+        if( empty( $user ) )
+        {
+            return;
+        }
+
+        return ( ! empty( $user ) ? $user->first_name . " " .$user->last_name : false );
+    }
+
     public static function Get_user_name_by_id( $user_id )
     {
         $user = UsersModel::Get_by_item_id( $user_id );
