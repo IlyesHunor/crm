@@ -105,7 +105,7 @@ class EventsModel extends \yii\db\ActiveRecord
             ->one();
     }
 
-    public static function Get_list_where_is_enabled_and_public()
+    public static function Get_list_where_is_enabled_and_public( $limit = null )
     {
         return self::find()
             ->andOnCondition(
@@ -115,6 +115,7 @@ class EventsModel extends \yii\db\ActiveRecord
                     "is_deleted"    => 0,
                 )
             )
+            ->limit( $limit )
             ->all();
     }
 
@@ -129,5 +130,18 @@ class EventsModel extends \yii\db\ActiveRecord
                 )
             )
             ->count();
+    }
+
+    public static function Get_list_by_user_id( $user_id )
+    {
+        return self::find()
+            ->andOnCondition(
+                array(
+                    "user_id"   => $user_id,
+                    "is_enabled"=> 1,
+                    "is_deleted"=> 0,
+                )
+            )
+            ->all();
     }
 }

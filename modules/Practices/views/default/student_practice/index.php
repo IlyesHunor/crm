@@ -21,23 +21,21 @@ if( empty( $departments ) )
     <?php
     foreach( $departments as $department )
     {
-    ?>
-        <h2>
-            <?php echo Yii::t( "app", $department->name ); ?>
-        </h2>
-        <?php
         if( ! empty( $department->years ) )
         {
+        ?>
+            <h2>
+                <?php echo Yii::t( "app", $department->name ); ?>
+            </h2>
+            <?php
             foreach( $department->years as $year )
             {
-            ?>
-                <h3>
-                    <?php echo Yii::t( "app", $year->name ); ?>
-                </h3>
-            <?php
                 if( ! empty( $year->students ) )
                 {
                 ?>
+                    <h3>
+                        <?php echo Yii::t( "app", $year->name ); ?>
+                    </h3>
                     <table class="table">
                         <thead class="thead-dark">
                             <tr>
@@ -78,11 +76,19 @@ if( empty( $departments ) )
                                 </td>
                                 <td scope="col">
                                     <?php
-                                    if( PermissionHelper::Is_head_of_department() )
+                                    if( PermissionHelper::Is_head_of_department() && ! empty( $student->practice_assn ) )
                                     {
+                                        $class = "btn-danger";
+                                        $title = Yii::t( "app", "Generate_contract" );
+
+                                        if( PracticeHelper::Is_contract_generated( $student->practice_assn ) )
+                                        {
+                                            $class = "btn-success";
+                                            $title = Yii::t( "app", "Contract_generated" );
+                                        }
                                     ?>
                                         <a href="<?php echo PracticeHelper::Get_practice_contract_action_url( $student->practice_assn ); ?>"
-                                            class="btn btn-danger">
+                                            class="btn <?php echo $class; ?>" title="<?php echo $title; ?>">
                                             <?php echo Yii::t( "app", "Contract" ); ?>
                                         </a>
                                     <?php
@@ -99,12 +105,23 @@ if( empty( $departments ) )
 
                                     if( ! empty( $student->practice_assn ) )
                                     {
-                                    ?>
-                                        <a href="<?php echo Yii::getAlias( "@imgUrl" ).$student->practice_assn->report; ?>"
-                                            class="btn btn-success" download="download">
-                                            <?php echo Yii::t( "app", "Report" ); ?>
-                                        </a>
-                                    <?php
+                                        if( ! empty( $student->practice_assn->report ) )
+                                        {
+                                        ?>
+                                            <a href="<?php echo Yii::getAlias( "@imgUrl" ).$student->practice_assn->report; ?>"
+                                               class="btn btn-success" download="download" title="<?php echo Yii::t( "app", "Download_report" ); ?>">
+                                                <?php echo Yii::t( "app", "Report" ); ?>
+                                            </a>
+                                        <?php
+                                        }
+                                        else
+                                        {
+                                        ?>
+                                            <span class="btn btn-danger" title="<?php echo Yii::t( "app", "Report_not_uploaded" ); ?>">
+                                                <?php echo Yii::t( "app", "Report" ); ?>
+                                            </span>
+                                        <?php
+                                        }
                                     }
                                     ?>
                                 </td>

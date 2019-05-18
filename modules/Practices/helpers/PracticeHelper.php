@@ -102,10 +102,12 @@ class PracticeHelper
             return false;
         }
 
+        /*
         if( self::Is_contract_signed_by_teacher( $practice_assn ) && ! self::Is_contract_signed_by_company( $practice_assn ) )
         {
             return "sign_company";
         }
+        */
 
         return "generate_contract?practice_id=" . $practice_assn->practice_id;
     }

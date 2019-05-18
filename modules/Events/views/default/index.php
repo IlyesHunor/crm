@@ -1,3 +1,6 @@
+<nav id="sidebar">
+    <?php echo Yii::$app->controller->renderPartial( "sidebar" ); ?>
+</nav>
 <?php
 if( empty( $events ) )
 {
@@ -6,8 +9,7 @@ if( empty( $events ) )
 else
 {
 ?>
-
-    <div class="content">
+    <div class="content with-sidebar">
         <h1>
             <?php echo Yii::t( "app", "Events" ); ?>
         </h1>

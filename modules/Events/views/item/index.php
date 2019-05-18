@@ -10,7 +10,10 @@ $last_url           = EventHelper::Get_url();
 $delete_image_url   = EventHelper::Get_image_delete_url( $event_details );
 ?>
 
-<div class="content">
+<nav id="sidebar">
+    <?php echo Yii::$app->controller->renderPartial( "/default/sidebar" ); ?>
+</nav>
+<div class="content with-sidebar">
     <h1>
         <?php echo Yii::t( "app", $page_title ); ?>
     </h1>

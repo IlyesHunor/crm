@@ -80,6 +80,9 @@ $config = [
         'practices' => [
             'class' => 'app\modules\Practices\Practices',
         ],
+        'notifications' => [
+            'class' => 'app\modules\Notifications\Notifications',
+        ],
     ],
 ];
 
