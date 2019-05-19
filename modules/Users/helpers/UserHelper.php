@@ -67,4 +67,11 @@ class UserHelper
 
         return true;
     }
+
+    public static function Get_head_of_department_user_id()
+    {
+        $user = UsersModel::Get_head_of_department();
+
+        return ( ! empty( $user ) ? $user->id : false );
+    }
 }

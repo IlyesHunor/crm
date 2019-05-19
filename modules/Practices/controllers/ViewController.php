@@ -79,6 +79,17 @@ class ViewController extends FrontSideController
             return;
         }
 
+        foreach( $subscriptions as $index => $subscription )
+        {
+            if( ! empty( $subscription->is_accepted ) )
+            {
+                $subscription->practice_assn = PracticesUsersAssnModel::Get_by_practice_id_and_user_id(
+                    $subscription->practice_id,
+                    $subscription->user_id
+                );
+            }
+        }
+
         $this->data["subscriptions"] = $subscriptions;
     }
 

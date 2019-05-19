@@ -2,6 +2,7 @@
 $template_details   = ( ! empty( $template_details ) ? $template_details : "" );
 $contract_template  = ( ! empty( $practice_assn ) && ! empty( $practice_assn->contract ) ? $practice_assn->contract : $template_details->text );
 use app\helpers\PostHelper;
+use app\modules\Practices\helpers\PracticeHelper;
 use yii\helpers\Url;
 
 ?>
@@ -28,6 +29,47 @@ use yii\helpers\Url;
             </div>
         </div>
 
+        <div class="form-group">
+            <div>
+                <label for="sign">
+                    <?php echo Yii::t( "app", "Sign" ); ?>
+                </label>
+            </div>
+            <div class="signing-box">
+                <?php
+                if( ! empty( $practice_assn->teacher_sign ) )
+                {
+                ?>
+                    <img src="<?php echo Yii::getAlias( "@imgUrl" ) . $practice_assn->teacher_sign; ?>" alt=""/>
+                 <?php
+                }
+                else
+                {
+                ?>
+                    <canvas id="sign" data-type="university"></canvas>
+                    <a href="javascript:void(0)" class="clear-signing-box">
+                        <img src="<?php echo Url::toRoute( "/assets/images/x-mark.png" ); ?>" alt=""/>
+                    </a>
+                <?php
+                }
+                ?>
+            </div>
+        </div>
+
+        <input type="hidden" value="" name="signing-image">
+        <input type="hidden" value="teacher_sign" name="type">
         <input type="submit" value="<?php echo Yii::t( "app", "Save" ); ?>" class="btn btn-primary">
+
+        <?php
+        if( PracticeHelper::Is_contract_generated( $practice_assn ) )
+        {
+        ?>
+            <a href="javascript:void(0)" class="btn btn-success download_pdf"
+                data-practice-assn-id="<?php echo $practice_assn->id; ?>">
+                <?php echo Yii::t( "app", "Download_pdf" ); ?>
+            </a>
+        <?php
+        }
+        ?>
     </form>
 </div>

@@ -1,5 +1,6 @@
 <?php
 
+use app\modules\Practices\helpers\PracticeHelper;
 use yii\helpers\Url;
 
 if( empty( $practice_details ) )
@@ -68,6 +69,9 @@ $delete_url = Url::toRoute( ["/practices/accept/delete?practice_id=".$practice_d
                     <th scope="col">
                         <?php echo Yii::t( "app", "Actions" ); ?>
                     </th>
+                    <th scope="col">
+                        <?php echo Yii::t( "app", "Contract" ); ?>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -100,16 +104,42 @@ $delete_url = Url::toRoute( ["/practices/accept/delete?practice_id=".$practice_d
                                 }
                                 else
                                 {
-                                    ?>
+                                ?>
                                     <span class="btn btn-success">
                                         <?php echo Yii::t( "app", "Accepted" ); ?>
                                     </span>
-                                    <?php
+                                <?php
                                 }
                                 ?>
                                 <a href="<?php echo $delete_url . "&user_id=" . $subscription->user_id; ?>" class="btn btn-danger">
                                     <?php echo Yii::t( "app", "Delete" ); ?>
                                 </a>
+                            </td>
+                            <td>
+                                <?php
+                                if( empty( $subscription->practice_assn ) )
+                                {
+                                    echo "-";
+                                }
+                                else
+                                {
+                                    $class = "btn-danger";
+                                    $title = Yii::t("app", "Generate_contract");
+
+                                    if( PracticeHelper::Is_contract_signed_by_company( $subscription->practice_assn ) )
+                                    {
+                                        $class = "btn-success";
+                                        $title = Yii::t("app", "Contract_generated");
+                                    }
+                                    ?>
+
+                                    <a href="<?php echo "default/" . PracticeHelper::Get_practice_contract_action_url( $subscription->practice_assn ); ?>"
+                                       class="btn <?php echo $class; ?>" title="<?php echo "asd" ?>">
+                                        <?php echo Yii::t("app", "Contract"); ?>
+                                    </a>
+                                <?php
+                                }
+                                ?>
                             </td>
                         </tr>
                     <?php
