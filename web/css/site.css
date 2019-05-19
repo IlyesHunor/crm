@@ -343,3 +343,20 @@ textarea
         {
             height: 500px;
         }
+.signing-box
+{
+    border: 1px solid #b6b6b6;
+    position: relative;
+}
+    .signing-box .clear-signing-box
+    {
+        display: none;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+    }
+        .signing-box .clear-signing-box > img
+        {
+            width: 20px;
+            height: 20px;
+        }

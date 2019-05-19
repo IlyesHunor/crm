@@ -22,6 +22,7 @@ class PracticeSubscribersModel extends \yii\db\ActiveRecord
     public $practice_name;
     public $first_name;
     public $last_name;
+    public $practice_assn;
 
     /**
      * @inheritdoc

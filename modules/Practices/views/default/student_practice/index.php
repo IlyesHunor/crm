@@ -86,7 +86,7 @@ if( empty( $departments ) )
                                             $class = "btn-success";
                                             $title = Yii::t( "app", "Contract_generated" );
                                         }
-                                    ?>
+                                        ?>
                                         <a href="<?php echo PracticeHelper::Get_practice_contract_action_url( $student->practice_assn ); ?>"
                                             class="btn <?php echo $class; ?>" title="<?php echo $title; ?>">
                                             <?php echo Yii::t( "app", "Contract" ); ?>

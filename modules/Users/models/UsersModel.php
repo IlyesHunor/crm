@@ -145,4 +145,19 @@ class UsersModel extends ActiveRecord implements IdentityInterface
         )
         ->all();
     }
+
+    public static function Get_head_of_department()
+    {
+        return self::find()
+            ->alias( "u" )
+            ->andOnCondition(
+                array(
+                    "u.is_enabled"  => 1,
+                    "u.is_deleted"  => 0,
+                    "ut.name"       => "Head_of_department",
+                )
+            )
+            ->leftJoin( "user_types ut", "u.user_type_id = ut.id" )
+            ->one();
+    }
 }

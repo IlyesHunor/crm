@@ -109,7 +109,7 @@ class PracticeHelper
         }
         */
 
-        return "generate_contract?practice_id=" . $practice_assn->practice_id;
+        return "generate_contract?practice_id=" . $practice_assn->id;
     }
 
     public static function Is_contract_generated( $practice_assn )
