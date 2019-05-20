@@ -7,6 +7,7 @@ use app\helpers\PostHelper;
 use app\modules\Events\models\EventCategoriesModel;
 use app\modules\Events\models\EventsModel;
 use app\modules\Practices\models\PracticesModel;
+use app\modules\Practices\models\PracticesUsersAssnModel;
 use app\modules\Users\helpers\UserHelper;
 use app\modules\Users\models\UsersModel;
 use Yii;
@@ -63,6 +64,28 @@ class FrontSideController extends Controller
         }
 
         $practice = PracticesModel::Get_by_item_id( $practice_id );
+
+        if( empty( $practice ) )
+        {
+            $this->Set_error_message( Yii::t( "app", "Practice_not_found" ) );
+
+            return false;
+        }
+
+        return true;
+    }
+
+    protected function Validate_practice_assn()
+    {
+        $practice_id = $this->Get_id_from_post_or_get( "practice_id" );
+
+        if( empty( $practice_id ) )
+        {
+            $this->Set_error_message( Yii::t( "app", "Practice_not_found" ) );
+            return false;
+        }
+
+        $practice = PracticesUsersAssnModel::Get_by_item_id( $practice_id );
 
         if( empty( $practice ) )
         {

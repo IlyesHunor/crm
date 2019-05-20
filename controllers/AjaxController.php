@@ -6,8 +6,10 @@ use app\controllers\FrontSideController;
 use app\helpers\DateHelper;
 use app\helpers\PostHelper;
 use app\modules\Notifications\models\NotificationsModel;
+use app\modules\Practices\models\PracticesModel;
 use app\modules\Practices\models\PracticesUsersAssnModel;
 use app\modules\Users\helpers\UserHelper;
+use app\modules\Users\models\DepartmentsModel;
 use Yii;
 use Dompdf;
 use yii\helpers\FileHelper;
@@ -111,11 +113,11 @@ class AjaxController extends FrontSideController
     {
         if( empty( $this->data["practice_assn"] ) )
         {
-            return;
+            return false;
         }
 
         $pdf    = new Dompdf\Dompdf();
-        $html   = $this->data["practice_assn"]->contract;
+        $html   = $this->Get_html_for_contract();
         $options= new Dompdf\Options();
 
         $options->setIsRemoteEnabled( true );
@@ -154,5 +156,89 @@ class AjaxController extends FrontSideController
         file_put_contents( $pdf_path, $pdf );
 
         $result["download_url"] = Yii::getAlias( "@imgUrl" ) . $path ."contract.pdf";
+    }
+
+    private function Get_html_for_contract()
+    {
+        $html = $this->data["practice_assn"]->contract;
+
+        $html .= Yii::$app->controller->renderPartial(
+            "/partials/signing_html",
+            array( "data" => $this->data["practice_assn"] )
+        );
+
+        return $html;
+    }
+
+    public function actionSave_mark()
+    {
+        $result = array( "status" => "error" );
+
+        $this->Check_if_has_rights_to_modify( $result );
+        $this->Validate_practice_assn( $result );
+        $this->Validate_mark( $result );
+        $this->Save_mark();
+
+        $result["status"] = "success";
+
+        $this->Show_result_with_json( $result );
+    }
+
+    private function Check_if_has_rights_to_modify( & $result )
+    {
+        $department_id  = PostHelper::Get_integer( "department_id" );
+        $department     = DepartmentsModel::Get_by_item_id( $department_id );
+
+        if( empty( $department ) )
+        {
+            $result["message"] = Yii::t( "app", "Department_not_found" );
+
+            $this->Show_result_with_json( $result );
+        }
+
+        if( $department[0]->coordinator_user_id != UserHelper::Get_user_id() )
+        {
+            $result["message"] = Yii::t( "app", "You_dont_have_rights_to_modify" );
+
+            $this->Show_result_with_json( $result );
+        }
+    }
+
+    private function Validate_mark( & $result )
+    {
+        $mark = PostHelper::Get_integer( "mark" );
+
+        if( empty( $mark ) )
+        {
+            $result["message"] = Yii::t( "app", "Mark_cant_be_empty" );
+
+            $this->Show_result_with_json( $result );
+        }
+
+        if( $mark < 1 || $mark > 10 )
+        {
+            $result["message"] = Yii::t( "app", "Invalid_mark" );
+
+            $this->Show_result_with_json( $result );
+        }
+    }
+
+    private function Save_mark()
+    {
+        $practice_assn_id   = PostHelper::Get_integer( "practice_assn_id" );
+        $model              = PracticesUsersAssnModel::Get_by_item_id( $practice_assn_id );
+
+        if( empty( $model ) )
+        {
+            return;
+        }
+
+        $data = array(
+            "modified_user_id"  => UserHelper::Get_user_id(),
+            "mark"              => PostHelper::Get_integer( "mark" ),
+            "modify_date"       => DateHelper::Get_datetime()
+        );
+
+        $model->updateAttributes( $data );
     }
 }

@@ -83,6 +83,9 @@ $config = [
         'notifications' => [
             'class' => 'app\modules\Notifications\Notifications',
         ],
+        'theses' => [
+            'class' => 'app\modules\Theses\Theses',
+        ],
     ],
 ];
 

@@ -146,40 +146,6 @@ class DefaultController extends FrontSideController
         }
     }
 
-    public function actionAdd_mark()
-    {
-        if( ! $this->Validate_practice_assn() )
-        {
-            return;
-        }
-
-        return $this->Render_view( "add_mark/index" );
-    }
-
-    private function Validate_practice_assn()
-    {
-        $practice_id = $this->Get_id_from_post_or_get( "practice_id" );
-
-        if( empty( $practice_id ) )
-        {
-            $this->Set_error_message( Yii::t( "app", "Practice_not_found" ) );
-            return false;
-        }
-
-        $practice = PracticesUsersAssnModel::Get_by_item_id( $practice_id );
-
-        if( empty( $practice ) )
-        {
-            $this->Set_error_message( Yii::t( "app", "Practice_not_found" ) );
-
-            return false;
-        }
-
-        $this->data["practice_details"] = $practice;
-
-        return true;
-    }
-
     public function actionGenerate_contract()
     {
         if( ! $this->Validate_practice_assn() )

@@ -4,6 +4,7 @@ $(document).ready(function ()
     init_mark_notification_as_read();
     main_handlers_for_digital_signing();
     init_download_pdf();
+    init_save_mark();
 
     $('#sidebarCollapse').on('click', function () {
         $('#sidebar').toggleClass('active');
@@ -271,4 +272,41 @@ function init_download( url )
     element.click();
 
     document.body.removeChild( element );
+}
+
+function init_save_mark()
+{
+    $( ".save-mark" ).click( function(){
+        $( "#overlay" ).show();
+        let parameters = get_parameters_for_add_mark( this );
+
+        save_mark( parameters );
+    });
+}
+
+function get_parameters_for_add_mark( item )
+{
+    let parameters                  = {}
+    parameters["practice_assn_id"]  = $( item ).attr( "data-practice-assn-id" );
+    parameters["department_id"]     = $( item ).attr( "data-department-id" );
+    parameters["mark"]              = $( item ).parent().find( 'input[name="mark"]' ).val();
+
+    return parameters;
+}
+
+function save_mark( parameters )
+{
+    send_post_request(
+        base_url + "/ajax/save_mark",
+        parameters,
+        function( result ){
+            $( "#overlay" ).hide();
+
+            if( result.status != "success" )
+            {
+                return;
+            }
+        },
+        "json"
+    );
 }

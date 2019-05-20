@@ -47,15 +47,15 @@ class CompaniesModel extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'added_user_id' => 'Added User ID',
-            'modified_user_id' => 'Modified User ID',
-            'name' => 'Name',
-            'code' => 'Code',
-            'insert_date' => 'Insert Date',
-            'modify_date' => 'Modify Date',
-            'is_enabled' => 'Is Enabled',
-            'is_deleted' => 'Is Deleted',
+            'id'                => 'ID',
+            'added_user_id'     => 'Added User ID',
+            'modified_user_id'  => 'Modified User ID',
+            'name'              => 'Name',
+            'code'              => 'Code',
+            'insert_date'       => 'Insert Date',
+            'modify_date'       => 'Modify Date',
+            'is_enabled'        => 'Is Enabled',
+            'is_deleted'        => 'Is Deleted',
         ];
     }
 
@@ -70,5 +70,17 @@ class CompaniesModel extends \yii\db\ActiveRecord
                 )
             )
             ->one();
+    }
+
+    public static function Get_list()
+    {
+        return self::find()
+            ->andOnCondition(
+                array(
+                    "is_enabled"=> 1,
+                    "is_deleted"=> 0
+                )
+            )
+            ->all();
     }
 }
