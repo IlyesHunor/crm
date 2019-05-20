@@ -1,6 +1,7 @@
 <?php
 
 use app\helpers\PermissionHelper;
+use app\helpers\PostHelper;
 use app\modules\Practices\helpers\PracticeHelper;
 use \app\modules\Users\helpers\UserHelper;
 use \app\helpers\CompanyHelper;
@@ -72,7 +73,24 @@ if( empty( $departments ) )
                                     <?php echo CompanyHelper::Get_company_name( $company_id ); ?>
                                 </td>
                                 <td scope="col">
-                                    <?php echo ( ! empty( $student->practice_assn->mark ) ? $student->practice_assn->mark : "" ); ?>
+                                    <?php
+                                    if( PermissionHelper::Is_coordinator( $department ) && ! empty( $student->practice_assn ) )
+                                    {
+                                    ?>
+                                        <input type="number" name="mark" min="1" max="10" style="width: 50px"
+                                            value="<?php echo ( ! empty( $student->practice_assn->mark ) ? $student->practice_assn->mark : "" ); ?>">
+                                        <a href="javascript:void(0);" class="btn btn-primary save-mark"
+                                            data-practice-assn-id="<?php echo $student->practice_assn->id; ?>"
+                                            data-department-id="<?php echo $department->id; ?>">
+                                            <?php echo Yii::t( "app", "Add_mark" ); ?>
+                                        </a>
+                                    <?php
+                                    }
+                                    else
+                                    {
+                                        echo ( ! empty( $student->practice_assn->mark ) ? $student->practice_assn->mark : "" );
+                                    }
+                                    ?>
                                 </td>
                                 <td scope="col">
                                     <?php
@@ -90,15 +108,6 @@ if( empty( $departments ) )
                                         <a href="<?php echo PracticeHelper::Get_practice_contract_action_url( $student->practice_assn ); ?>"
                                             class="btn <?php echo $class; ?>" title="<?php echo $title; ?>">
                                             <?php echo Yii::t( "app", "Contract" ); ?>
-                                        </a>
-                                    <?php
-                                    }
-                                    elseif( PermissionHelper::Is_coordinator() && ! empty( $student->practice_assn ) )
-                                    {
-                                    ?>
-                                        <a href="<?php echo Url::toRoute( ["add_mark"] ); ?>?practice_id=<?php echo $student->practice_assn->id; ?>"
-                                            class="btn btn-primary">
-                                            <?php echo Yii::t( "app", "Add_mark" ); ?>
                                         </a>
                                     <?php
                                     }

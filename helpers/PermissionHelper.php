@@ -69,7 +69,7 @@ class PermissionHelper extends FrontSideController
         }
     }
 
-    public static function Is_coordinator()
+    public static function Is_coordinator( $department = null )
     {
         $user = UserHelper::Get_user();
 
@@ -87,8 +87,13 @@ class PermissionHelper extends FrontSideController
 
         if( $user_type->name == "Coordinator" )
         {
-            return true;
+            if( empty( $department ) || $department->coordinator_user_id == UserHelper::Get_user_id() )
+            {
+                return true;
+            }
         }
+
+        return false;
     }
 
     public static function Is_head_of_department()
