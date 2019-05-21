@@ -3,7 +3,7 @@ namespace app\modules\Notifications\helpers;
 
 use app\helpers\PermissionHelper;
 use app\modules\Notifications\models\NotificationsModel;
-use app\modules\Practices\helpers\PracticeHelper;
+use app\modules\Practices\helpers\ThesisHelper;
 use app\modules\Practices\models\PracticeSubscribersModel;
 use app\modules\Users\helpers\UserHelper;
 use Yii;

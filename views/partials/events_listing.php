@@ -58,7 +58,7 @@ if( empty( $events ) )
                     <a href="<?php echo $edit_url; ?>" class="btn btn-primary">
                         <?php echo Yii::t( "app", "Modify" ); ?>
                     </a>
-                    <a href="<?php echo $delete_url; ?>" class="btn btn-danger">
+                    <a href="<?php echo $delete_url; ?>" class="btn btn-danger confirm-delete">
                         <?php echo Yii::t( "app", "Delete" ); ?>
                     </a>
                 <?php

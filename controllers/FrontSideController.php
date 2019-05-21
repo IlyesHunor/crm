@@ -8,6 +8,7 @@ use app\modules\Events\models\EventCategoriesModel;
 use app\modules\Events\models\EventsModel;
 use app\modules\Practices\models\PracticesModel;
 use app\modules\Practices\models\PracticesUsersAssnModel;
+use app\modules\Theses\models\ThesesModel;
 use app\modules\Users\helpers\UserHelper;
 use app\modules\Users\models\UsersModel;
 use Yii;
@@ -90,6 +91,28 @@ class FrontSideController extends Controller
         if( empty( $practice ) )
         {
             $this->Set_error_message( Yii::t( "app", "Practice_not_found" ) );
+
+            return false;
+        }
+
+        return true;
+    }
+
+    protected function Validate_thesis()
+    {
+        $thesis_id = $this->Get_id_from_post_or_get( "thesis_id" );
+
+        if( empty( $thesis_id ) )
+        {
+            $this->Set_error_message( Yii::t( "app", "Thesis_not_found" ) );
+            return false;
+        }
+
+        $thesis = ThesesModel::Get_by_item_id( $thesis_id );
+
+        if( empty( $thesis ) )
+        {
+            $this->Set_error_message( Yii::t( "app", "Thesis_not_found" ) );
 
             return false;
         }

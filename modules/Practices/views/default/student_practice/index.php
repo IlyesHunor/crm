@@ -118,7 +118,8 @@ if( empty( $departments ) )
                                         {
                                         ?>
                                             <a href="<?php echo Yii::getAlias( "@imgUrl" ).$student->practice_assn->report; ?>"
-                                               class="btn btn-success" download="download" title="<?php echo Yii::t( "app", "Download_report" ); ?>">
+                                               class="btn btn-success" data-fancybox="gallery"
+                                               title="<?php echo Yii::t( "app", "Download_report" ); ?>">
                                                 <?php echo Yii::t( "app", "Report" ); ?>
                                             </a>
                                         <?php

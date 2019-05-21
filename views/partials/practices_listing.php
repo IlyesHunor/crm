@@ -2,7 +2,6 @@
 use app\helpers\DateHelper;
 use app\helpers\ImageHelper;
 use app\helpers\PermissionHelper;
-use app\modules\Events\helpers\EventHelper;
 use app\modules\Practices\helpers\PracticeHelper;
 
 if( empty( $practices ) )
@@ -61,7 +60,7 @@ if( empty( $practices ) )
                     <a href="<?php echo $edit_url; ?>" class="btn btn-primary">
                         <?php echo Yii::t( "app", "Modify" ); ?>
                     </a>
-                    <a href="<?php echo $delete_url; ?>" class="btn btn-danger">
+                    <a href="<?php echo $delete_url; ?>" class="btn btn-danger confirm-delete">
                         <?php echo Yii::t( "app", "Delete" ); ?>
                     </a>
                 <?php

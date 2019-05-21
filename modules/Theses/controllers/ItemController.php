@@ -104,8 +104,10 @@ class ItemController extends FrontSideController
 
     private function Validate()
     {
-        $validation             = new ThesesModel();
-        $validation->attributes = $_POST;
+        $validation                 = new ThesesModel();
+        $validation->attributes     = $_POST;
+        $validation->added_user_id  = UserHelper::Get_user_id();
+        $validation->user_id        = UserHelper::Get_user_id();
 
         $validation->validate();
 
@@ -173,8 +175,8 @@ class ItemController extends FrontSideController
     {
         $data = array(
             "user_id"           => UserHelper::Get_user_id(),
-            "department_id"     => PostHelper::Get_integer( "department" ),
-            "company_id"        => PostHelper::Get_integer( "company" ),
+            "department_id"     => PostHelper::Get_integer( "department_id" ),
+            "company_id"        => PostHelper::Get_integer( "company_id" ),
             "name"              => PostHelper::Get( "name" ),
             "description"       => PostHelper::Get( "description" ),
             "is_enabled"        => 1,
@@ -198,6 +200,8 @@ class ItemController extends FrontSideController
             $new_id = Yii::$app->db->getLastInsertID();
 
             $this->Set_success_message( Yii::t( "app", "Thesis_saved_successfully" ) );
+
+            return Yii::$app->controller->redirect( "item?thesis_id=". $new_id );
         }
 
         $thesis_model               = ThesesModel::findOne( $this->thesis_id );
@@ -208,7 +212,7 @@ class ItemController extends FrontSideController
 
         $this->Set_success_message( Yii::t( "app", "Thesis_saved_successfully" ) );
 
-        //return Yii::$app->controller->redirect( "item?thesis_id=". $this->thesis_id );
+        return Yii::$app->controller->redirect( "item?thesis_id=". $this->thesis_id );
     }
 
     public function actionDelete()

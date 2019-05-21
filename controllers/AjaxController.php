@@ -4,12 +4,15 @@ namespace app\controllers;
 
 use app\controllers\FrontSideController;
 use app\helpers\DateHelper;
+use app\helpers\PermissionHelper;
 use app\helpers\PostHelper;
 use app\modules\Notifications\models\NotificationsModel;
 use app\modules\Practices\models\PracticesModel;
 use app\modules\Practices\models\PracticesUsersAssnModel;
+use app\modules\Theses\models\ThesesModel;
 use app\modules\Users\helpers\UserHelper;
 use app\modules\Users\models\DepartmentsModel;
+use app\modules\Users\models\UsersModel;
 use Yii;
 use Dompdf;
 use yii\helpers\FileHelper;
@@ -28,6 +31,7 @@ class AjaxController extends FrontSideController
 {
     private $notification;
     private $practice_assn_id;
+    private $thesis;
 
     public function actionSet_notification_read()
     {
@@ -74,7 +78,7 @@ class AjaxController extends FrontSideController
     {
         $result = array( "status" => "error" );
 
-        $this->Validate_practice_assn( $result );
+        $this->Validate_practice_assn_ajax( $result );
 
         $pdf = $this->Generate_pdf();
 
@@ -85,7 +89,7 @@ class AjaxController extends FrontSideController
         $this->Show_result_with_json( $result );
     }
 
-    private function Validate_practice_assn( & $result )
+    private function Validate_practice_assn_ajax( & $result )
     {
         $practice_id = PostHelper::Get_integer( "practice_assn_id" );
 
@@ -175,7 +179,7 @@ class AjaxController extends FrontSideController
         $result = array( "status" => "error" );
 
         $this->Check_if_has_rights_to_modify( $result );
-        $this->Validate_practice_assn( $result );
+        $this->Validate_practice_assn_ajax( $result );
         $this->Validate_mark( $result );
         $this->Save_mark();
 
@@ -236,6 +240,93 @@ class AjaxController extends FrontSideController
         $data = array(
             "modified_user_id"  => UserHelper::Get_user_id(),
             "mark"              => PostHelper::Get_integer( "mark" ),
+            "modify_date"       => DateHelper::Get_datetime()
+        );
+
+        $model->updateAttributes( $data );
+    }
+
+    public function actionAdd_student_to_thesis()
+    {
+        $result = array( "status" => "error" );
+
+        if( ! PermissionHelper::Is_head_of_department() )
+        {
+            $result["message"] = Yii::t( "app", "Dont_have_permission" );
+
+            $this->Show_result_with_json( $result );
+        }
+
+        $this->Validate_and_load_thesis( $result );
+        $this->Validate_student( $result );
+        $this->Add_student_to_thesis();
+
+        $result["status"] = "success";
+
+        $this->Show_result_with_json( $result );
+    }
+
+    private function Validate_and_load_thesis( $result )
+    {
+        $thesis_id = PostHelper::Get_integer( "thesis_id" );
+
+        if( empty( $thesis_id ) )
+        {
+            $result["message"] = Yii::t( "app", "Thesis_not_found" );
+
+            $this->Show_result_with_json( $result );
+        }
+
+        $thesis = ThesesModel::Get_by_item_id( $thesis_id );
+
+        if( empty( $thesis ) )
+        {
+            $result["message"] = Yii::t( "app", "Thesis_not_found" );
+
+            $this->Show_result_with_json( $result );
+        }
+
+        $this->thesis = $thesis;
+    }
+
+    private function Validate_student( $result )
+    {
+        $student_id = PostHelper::Get_integer( "student_id" );
+
+        if( empty( $student_id ) )
+        {
+            $result["message"] = Yii::t( "app", "Student_not_found" );
+
+            $this->Show_result_with_json( $result );
+        }
+
+        $student = UsersModel::Get_by_item_id( $student_id );
+
+        if( empty( $student ) )
+        {
+            $result["message"] = Yii::t( "app", "Student_not_found" );
+
+            $this->Show_result_with_json( $result );
+        }
+    }
+
+    private function Add_student_to_thesis()
+    {
+        if( empty( $this->thesis ) )
+        {
+            return;
+        }
+
+        $model = ThesesModel::Get_by_item_id( $this->thesis->id );
+
+        if( empty( $model ) )
+        {
+            return;
+        }
+
+        $data = array(
+            "modified_user_id"  => UserHelper::Get_user_id(),
+            "student_id"        => PostHelper::Get_integer( "student_id" ),
             "modify_date"       => DateHelper::Get_datetime()
         );
 

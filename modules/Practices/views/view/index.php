@@ -111,7 +111,7 @@ $delete_url = Url::toRoute( ["/practices/accept/delete?practice_id=".$practice_d
                                 <?php
                                 }
                                 ?>
-                                <a href="<?php echo $delete_url . "&user_id=" . $subscription->user_id; ?>" class="btn btn-danger">
+                                <a href="<?php echo $delete_url . "&user_id=" . $subscription->user_id; ?>" class="btn btn-danger confirm-delete">
                                     <?php echo Yii::t( "app", "Delete" ); ?>
                                 </a>
                             </td>

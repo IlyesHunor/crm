@@ -118,6 +118,10 @@ a.desc:after {
 }
 
 /*My*/
+.hidden
+{
+    display: none;
+}
 #overlay
 {
     display: none;

@@ -1,13 +1,13 @@
 <?php
 use \app\helpers\PostHelper;
-use app\modules\Events\helpers\EventHelper;
+use app\modules\Theses\helpers\ThesisHelper;
 use yii\helpers\Url;
 
 $thesis_details   = ( ! empty( $thesis_details ) ? $thesis_details : "" );
 $page_title         = ( ! empty( $thesis_details ) ? "Modify_thesis" : "Add_new_thesis" );
 $is_public          = ( ! empty( $thesis_details->is_public ) ? 1 : 0 );
-$last_url           = "";//ThesisHelper::Get_url();
-$delete_image_url   = "";//ThesisHelper::Get_image_delete_url( $thesis_details );
+$last_url           = ThesisHelper::Get_url();
+$delete_file_url    = ThesisHelper::Get_file_delete_url( $thesis_details );
 ?>
 <nav id="sidebar">
     <?php echo Yii::$app->controller->renderPartial( "/default/sidebar" ); ?>
@@ -39,7 +39,7 @@ $delete_image_url   = "";//ThesisHelper::Get_image_delete_url( $thesis_details )
                 </label>
             </div>
             <div class="select">
-                <select id="department">
+                <select id="department" name="department_id">
                     <option value=""></option>
                     <?php
                     if( ! empty( $departments ) )
@@ -47,7 +47,8 @@ $delete_image_url   = "";//ThesisHelper::Get_image_delete_url( $thesis_details )
                         foreach( $departments as $department )
                         {
                         ?>
-                            <option value="<?php echo $department->id; ?>">
+                            <option value="<?php echo $department->id; ?>"
+                                <?php echo ( $department->id == PostHelper::Get_integer( "department_id", $thesis_details ) ? 'selected="selected"' : "" ); ?>>
                                 <?php echo Yii::t( "app", $department->name ); ?>
                             </option>
                         <?php
@@ -65,7 +66,7 @@ $delete_image_url   = "";//ThesisHelper::Get_image_delete_url( $thesis_details )
             <div class="form-group">
                 <div>
                     <label for="file">
-                        <?php echo Yii::t( "app", "Image" ); ?>
+                        <?php echo Yii::t( "app", "File" ); ?>
                     </label>
                 </div>
                 <div>
@@ -73,7 +74,27 @@ $delete_image_url   = "";//ThesisHelper::Get_image_delete_url( $thesis_details )
                         value="<?php echo PostHelper::Get( "file", $thesis_details ); ?>"/>
                 </div>
             </div>
-        <?php
+
+            <?php
+            if( ! empty( $thesis_details->file ) )
+            {
+            ?>
+                <div class="form-group">
+                    <div>
+                        <?php echo Yii::t( "app", "File_actions" ); ?>
+                    </div>
+                    <div>
+                        <a href="<?php echo Yii::getAlias( "@imgUrl" ).$thesis_details->file; ?>"
+                            class="btn btn-primary fancybox" data-fancybox="gallery">
+                            <?php echo Yii::t( "app", "View_file" ); ?>
+                        </a>
+                        <a href="<?php echo $delete_file_url; ?>" class="btn btn-danger confirm-delete">
+                            <?php echo Yii::t( "app", "Delete_file" ); ?>
+                        </a>
+                    </div>
+                </div>
+            <?php
+            }
         }
         ?>
 
@@ -91,22 +112,23 @@ $delete_image_url   = "";//ThesisHelper::Get_image_delete_url( $thesis_details )
         <div class="form-group">
             <div>
                 <label for="with_company">
-                    <?php echo Yii::t( "app", "With_company" ); ?>
+                    <?php echo Yii::t( "app", "Include_company" ); ?>
                 </label>
             </div>
             <div>
-                <input type="checkbox" id="with_company" name="with_company">
+                <input type="checkbox" id="with_company" name="with_company" class="include-company"
+                    <?php echo ( ! empty( $thesis_details->company_id ) ? 'checked="checked"' : "" ); ?>>
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group select-company <?php echo ( empty( $thesis_details->company_id ) ? "hidden" : "" ) ?>">
             <div>
                 <label for="company">
                     <?php echo Yii::t( "app", "Department" ); ?>
                 </label>
             </div>
             <div class="select">
-                <select id="company">
+                <select id="company" name="company_id">
                     <option value=""></option>
                     <?php
                     if( ! empty( $companies ) )
@@ -114,7 +136,8 @@ $delete_image_url   = "";//ThesisHelper::Get_image_delete_url( $thesis_details )
                         foreach( $companies as $company )
                         {
                         ?>
-                            <option value="<?php echo $company->id; ?>">
+                            <option value="<?php echo $company->id; ?>"
+                                <?php echo ( $company->id == PostHelper::Get_integer( "company_id", $thesis_details ) ? 'selected="selected"' : "" ); ?>>
                                 <?php echo Yii::t( "app", $company->name ); ?>
                             </option>
                         <?php

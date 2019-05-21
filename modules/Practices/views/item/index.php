@@ -142,7 +142,7 @@ $delete_image_url   = PracticeHelper::Get_image_delete_url( $practice_details );
                         <img src="<?php echo Yii::getAlias( "@imgUrl" ) . $practice_details->image; ?>" alt />
                     </div>
                     <div>
-                        <a href="<?php echo $delete_image_url; ?>" class="btn btn-danger">
+                        <a href="<?php echo $delete_image_url; ?>" class="btn btn-danger confirm-delete">
                             <?php echo Yii::t( "app", "Delete_image" ); ?>
                         </a>
                     </div>
