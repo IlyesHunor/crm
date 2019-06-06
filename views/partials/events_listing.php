@@ -27,28 +27,32 @@ if( empty( $events ) )
                 </a>
             </div>
 
-            <div>
+            <div class="description">
                 <div>
                     <span class="title">
                         <?php echo $event->name; ?>
                     </span>
                 </div>
 
-                <div>
+                <div class="intro">
                     <span>
                         <?php echo $event->description; ?>
                     </span>
                 </div>
 
-                <div>
+                <div class="dates">
                     <span>
-                        <?php echo $start_date . " : " . $end_date; ?>
+                        <?php echo Yii::t( "app", "Start_date" ) . " : " . $start_date; ?>
+                    </span>
+                    <span>
+                        <?php echo Yii::t( "app", "End_date" ) . " : " . $end_date; ?>
                     </span>
                 </div>
             </div>
 
             <div>
                 <a href="<?php echo $view_url; ?>" class="btn btn-info">
+                    <i class="icon-view">&nbsp;</i>
                     <?php echo Yii::t( "app", "View" ); ?>
                 </a>
                 <?php
@@ -56,9 +60,11 @@ if( empty( $events ) )
                 {
                 ?>
                     <a href="<?php echo $edit_url; ?>" class="btn btn-primary">
+                        <i class="icon-edit">&nbsp;</i>
                         <?php echo Yii::t( "app", "Modify" ); ?>
                     </a>
-                    <a href="<?php echo $delete_url; ?>" class="btn btn-danger">
+                    <a href="<?php echo $delete_url; ?>" class="btn btn-danger confirm-delete">
+                        <i class="icon-delete">&nbsp;</i>
                         <?php echo Yii::t( "app", "Delete" ); ?>
                     </a>
                 <?php

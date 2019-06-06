@@ -141,7 +141,8 @@ use yii\helpers\Url;
                             <span>
                                 <?php echo Yii::t( "app", "Report" ) . ": "; ?>
                             </span>
-                            <a href="<?php echo Yii::getAlias( "@imgUrl" ) . $practice_details->assn_details->report ?>" download="download">
+                            <a href="<?php echo Yii::getAlias( "@imgUrl" ) . $practice_details->assn_details->report ?>"
+                                data-fancybox="gallery">
                                 <?php echo Yii::t( "app", "Uploaded_file" ); ?>
                             </a>
                         </div>
@@ -190,7 +191,7 @@ use yii\helpers\Url;
                         </div>
 
                         <div>
-                            <input type="submit" class="btn btn-primary" value="<?php echo Yii::t( "app", "Save" ); ?>">
+                            <input type="submit" class="btn btn-success" value="<?php echo Yii::t( "app", "Save" ); ?>">
                         </div>
                     </form>
                 </div>

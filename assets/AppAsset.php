@@ -9,12 +9,6 @@ namespace app\assets;
 
 use yii\web\AssetBundle;
 
-/**
- * Main application asset bundle.
- *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
- */
 class AppAsset extends AssetBundle
 {
     public $basePath = '@webroot';
@@ -22,9 +16,13 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/site.css',
         'css/responsive.css',
+        'assets/jquery-ui-1.12.1/jquery-ui.css',
+        'assets/jquery-ui-1.12.1/jquery-ui.structure.css',
+        'assets/jquery-ui-1.12.1/jquery-ui.theme.css'
     ];
     public $js = [
-        'js/main.js'
+        'assets/jquery-ui-1.12.1/jquery-ui.js',
+        'js/main.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

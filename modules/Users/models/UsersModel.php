@@ -21,7 +21,7 @@ use yii\web\IdentityInterface;
  * @property string $last_name
  * @property string $auth_key
  * @property string $insert_date
- * @property string $modifiy_date
+ * @property string $modify_date
  * @property int $is_student
  * @property int $is_enabled
  * @property int $is_deleted
@@ -49,8 +49,9 @@ class UsersModel extends ActiveRecord implements IdentityInterface
         return [
             [['added_user_id', 'modified_user_id', 'user_type_id', 'is_enabled', 'is_deleted'], 'integer'],
             [['password'], 'required'],
-            [['insert_date', 'modifiy_date'], 'safe'],
+            [['insert_date', 'modify_date'], 'safe'],
             [['email', 'password', 'first_name', 'last_name', 'auth_key'], 'string', 'max' => 255],
+            [['email'], 'email'],
         ];
     }
 
@@ -70,7 +71,7 @@ class UsersModel extends ActiveRecord implements IdentityInterface
             'last_name'         => 'Last Name',
             'auth_key'          => 'Auth Key',
             'insert_date'       => 'Insert Date',
-            'modifiy_date'      => 'Modifiy Date',
+            'modify_date'       => 'Modify Date',
             'is_enabled'        => 'Is Enabled',
             'is_deleted'        => 'Is Deleted',
         ];
@@ -132,6 +133,18 @@ class UsersModel extends ActiveRecord implements IdentityInterface
         ->one();
     }
 
+    public static function Get_by_item_id_for_admin( $user_id )
+    {
+        return self::find()
+        ->andOnCondition(
+            array(
+                "id"        => $user_id,
+                "is_deleted"=> 0
+            )
+        )
+        ->one();
+    }
+
     public static function Get_list_by_year_id( $year_id )
     {
         return self::find()
@@ -140,6 +153,18 @@ class UsersModel extends ActiveRecord implements IdentityInterface
                 "year_id"       => $year_id,
                 "is_student"    => 1,
                 "is_enabled"    => 1,
+                "is_deleted"    => 0
+            )
+        )
+        ->all();
+    }
+
+    public static function Get_list_by_user_type_id( $user_type_id )
+    {
+        return self::find()
+        ->andOnCondition(
+            array(
+                "user_type_id"  => $user_type_id,
                 "is_deleted"    => 0
             )
         )

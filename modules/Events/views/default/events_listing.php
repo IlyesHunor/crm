@@ -49,6 +49,7 @@ if( empty( $events ) )
 
             <div>
                 <a href="<?php echo $view_url; ?>" class="btn btn-info">
+                    <i class="icon-view">&nbsp;</i>
                     <?php echo Yii::t( "app", "View" ); ?>
                 </a>
                 <?php
@@ -56,9 +57,11 @@ if( empty( $events ) )
                 {
                 ?>
                     <a href="<?php echo $edit_url; ?>" class="btn btn-primary">
+                        <i class="icon-edit">&nbsp;</i>
                         <?php echo Yii::t( "app", "Modify" ); ?>
                     </a>
                     <a href="<?php echo $delete_url; ?>" class="btn btn-danger">
+                        <i class="icon-delete">&nbsp;</i>
                         <?php echo Yii::t( "app", "Delete" ); ?>
                     </a>
                 <?php

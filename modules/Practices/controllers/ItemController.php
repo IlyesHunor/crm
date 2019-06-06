@@ -189,7 +189,7 @@ class ItemController extends FrontSideController
 
             $this->Set_success_message( Yii::t( "app", "Practice_saved_successfully" ) );
 
-            //return Yii::$app->controller->redirect( "item?practice_id=". $new_id );
+            return Yii::$app->controller->redirect( "item?practice_id=". $new_id );
         }
 
         $practice_model             = PracticesModel::findOne( $this->practice_id );
@@ -200,7 +200,7 @@ class ItemController extends FrontSideController
 
         $this->Set_success_message( Yii::t( "app", "Practice_saved_successfully" ) );
 
-        //return Yii::$app->controller->redirect( "item?practice_id=". $this->practice_id );
+        return Yii::$app->controller->redirect( "item?practice_id=". $this->practice_id );
     }
 
     public function actionDelete()

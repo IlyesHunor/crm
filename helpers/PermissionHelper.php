@@ -105,7 +105,7 @@ class PermissionHelper extends FrontSideController
             return false;
         }
 
-        $user_type = UserTypesModel::Get_by_item_id( $user->user_type_id );
+        $user_type = UserTypesModel::Get_by_item_id( $user->user_type_id);
 
         if( empty( $user_type ) )
         {
@@ -113,6 +113,28 @@ class PermissionHelper extends FrontSideController
         }
 
         if( $user_type->name == "Head_of_department" )
+        {
+            return true;
+        }
+    }
+
+    public static function Is_admin()
+    {
+        $user = UserHelper::Get_user();
+
+        if( empty( $user ) )
+        {
+            return false;
+        }
+
+        $user_type = UserTypesModel::Get_by_item_id( $user->user_type_id);
+
+        if( empty( $user_type ) )
+        {
+            return false;
+        }
+
+        if( $user_type->name == "Admin" )
         {
             return true;
         }

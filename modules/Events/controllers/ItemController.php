@@ -21,8 +21,8 @@ use yii\web\UploadedFile;
  */
 class ItemController extends FrontSideController
 {
-    public $event_id;
-    public $event_details;
+    private $event_id;
+    private $event_details;
 
     public function behaviors()
     {

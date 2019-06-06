@@ -47,7 +47,8 @@ $item_url = Url::toRoute( ["item"] );
                         <?php echo $template->is_enabled; ?>
                     </td>
                     <td>
-                        <a href="<?php echo $item_url . "?item_id=" . $template->id; ?>" class="btn btn-default">
+                        <a href="<?php echo $item_url . "?item_id=" . $template->id; ?>" class="btn btn-primary">
+                            <i class="icon-edit">&nbsp;</i>
                             <?php echo Yii::t( "app", "Modify" ); ?>
                         </a>
                     </td>

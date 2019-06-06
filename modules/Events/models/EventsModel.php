@@ -2,6 +2,7 @@
 
 namespace app\modules\Events\models;
 
+use app\models\CommonModel;
 use Yii;
 
 /**
@@ -27,7 +28,7 @@ use Yii;
  * @property int $is_enabled
  * @property int $is_deleted
  */
-class EventsModel extends \yii\db\ActiveRecord
+class EventsModel extends CommonModel
 {
     /**
      * @inheritdoc
@@ -49,6 +50,7 @@ class EventsModel extends \yii\db\ActiveRecord
             [['start_date', 'end_date', 'insert_date', 'modify_date'], 'datetime', 'format' => 'php:Y-m-d H:i:s'],
             [['name', 'country', 'city', 'address', 'institution'], 'string', 'max' => 255],
             [['is_public', 'is_enabled', 'is_deleted'], 'string', 'max' => 1],
+            [['name', 'description', 'country', 'city', 'address', 'institution'], 'xss_clean']
         ];
     }
 
@@ -92,19 +94,6 @@ class EventsModel extends \yii\db\ActiveRecord
             ->one();
     }
 
-    public static function Get_by_item_and_user_id( $event_id, $user_id )
-    {
-        return self::find()
-            ->andOnCondition(
-                array(
-                    "id"            => $event_id,
-                    "user_id"       => $user_id,
-                    "is_deleted"    => 0,
-                )
-            )
-            ->one();
-    }
-
     public static function Get_list_where_is_enabled_and_public( $limit = null )
     {
         return self::find()
@@ -117,6 +106,19 @@ class EventsModel extends \yii\db\ActiveRecord
             )
             ->limit( $limit )
             ->all();
+    }
+
+    public static function Get_by_item_and_user_id( $event_id, $user_id )
+    {
+        return self::find()
+            ->andOnCondition(
+                array(
+                    "id"            => $event_id,
+                    "user_id"       => $user_id,
+                    "is_deleted"    => 0,
+                )
+            )
+            ->one();
     }
 
     public static function Count_where_is_enabled_and_public()

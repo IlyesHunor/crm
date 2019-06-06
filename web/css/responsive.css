@@ -1,3 +1,50 @@
+@media (max-width: 1200px)
+{
+    .navbar-brand
+    {
+        display: none;
+    }
+}
+@media (max-width: 1050px)
+{
+    .listing li.item,
+    .listing li.event
+    {
+        width: 49%;
+        margin-left: 2%;
+    }
+    .listing > li:nth-child( 2n + 1),
+    .listing > li:first-child
+    {
+        margin-left: 0;
+    }
+    #sidebar
+    {
+        display: none;
+        position: absolute;
+        background: #333;
+        width: 90%;
+        top: 50px;
+        left: -12px;
+    }
+        #sidebar h3
+        {
+            color: white;
+            text-align: center;
+        }
+    .banner
+    {
+        display: none;
+    }
+    .content.with-sidebar
+    {
+        width: 100%;
+    }
+    .sidebar-button
+    {
+        display: inline-block;
+    }
+}
 @media (max-width: 768px) {
     /* 80px and its content aligned to centre. Pushing it off the screen with the
        negative left margin
@@ -57,5 +104,14 @@
         -webkit-transform: translateX(50%);
         -ms-transform: translateX(50%);
         transform: translateX(50%);
+    }
+}
+@media(max-width: 550px)
+{
+    .listing li.item,
+    .listing li.event
+    {
+        width: 100%;
+        margin-left: 0;
     }
 }

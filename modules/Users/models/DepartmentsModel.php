@@ -21,6 +21,8 @@ use Yii;
 class DepartmentsModel extends \yii\db\ActiveRecord
 {
     public $years;
+    public $theses;
+
     /**
      * @inheritdoc
      */

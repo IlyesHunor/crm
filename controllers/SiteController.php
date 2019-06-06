@@ -63,8 +63,8 @@ class SiteController extends FrontSideController
      */
     public function actionIndex()
     {
-        $this->Load_events( 3 );
-        $this->Load_practices( 3 );
+        $this->Load_events( 6 );
+        $this->Load_practices( 6 );
 
         return $this->Render_view('index');
     }

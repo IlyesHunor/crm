@@ -24,6 +24,8 @@ use Yii;
  */
 class ThesesModel extends \yii\db\ActiveRecord
 {
+    public $subscribers;
+
     /**
      * @inheritdoc
      */
@@ -70,6 +72,18 @@ class ThesesModel extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function Get_by_item_id( $thesis_id )
+    {
+        return self::find()
+            ->andOnCondition(
+                array(
+                    "id"        => $thesis_id,
+                    "is_deleted"=> 0,
+                )
+            )
+            ->one();
+    }
+
     public static function Get_by_item_and_user_id( $thesis_id, $user_id )
     {
         return self::find()
@@ -81,5 +95,32 @@ class ThesesModel extends \yii\db\ActiveRecord
                 )
             )
             ->one();
+    }
+
+    public static function Get_list_by_department_id( $department_id )
+    {
+        return self::find()
+            ->andOnCondition(
+                array(
+                    "department_id" => $department_id,
+                    "is_enabled"    => 1,
+                    "is_deleted"    => 0,
+                )
+            )
+            ->all();
+    }
+
+    public static function Get_list_by_user_and_department_id( $user_id, $department_id )
+    {
+        return self::find()
+            ->andOnCondition(
+                array(
+                    "user_id"       => $user_id,
+                    "department_id" => $department_id,
+                    "is_enabled"    => 1,
+                    "is_deleted"    => 0,
+                )
+            )
+            ->all();
     }
 }

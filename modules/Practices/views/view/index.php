@@ -42,7 +42,7 @@ $delete_url = Url::toRoute( ["/practices/accept/delete?practice_id=".$practice_d
     </div>
 
     <div>
-        <?php echo Yii::t( "app", "Subscription_deadline_date" ) . ": " . $practice_details->deadline_date; ?>
+        <?php echo Yii::t( "app", "Deadline_date" ) . ": " . $practice_details->deadline_date; ?>
     </div>
 
     <?php
@@ -98,6 +98,7 @@ $delete_url = Url::toRoute( ["/practices/accept/delete?practice_id=".$practice_d
                                     ?>
                                     <a href="<?php echo $accept_url . "&user_id=" . $subscription->user_id; ?>"
                                        class="btn btn-primary">
+                                        <i class="icon-save">&nbsp;</i>
                                         <?php echo Yii::t( "app", "Accept" ); ?>
                                     </a>
                                     <?php
@@ -111,7 +112,8 @@ $delete_url = Url::toRoute( ["/practices/accept/delete?practice_id=".$practice_d
                                 <?php
                                 }
                                 ?>
-                                <a href="<?php echo $delete_url . "&user_id=" . $subscription->user_id; ?>" class="btn btn-danger">
+                                <a href="<?php echo $delete_url . "&user_id=" . $subscription->user_id; ?>" class="btn btn-danger confirm-delete">
+                                    <i class="icon-delete">&nbsp;</i>
                                     <?php echo Yii::t( "app", "Delete" ); ?>
                                 </a>
                             </td>
@@ -134,7 +136,7 @@ $delete_url = Url::toRoute( ["/practices/accept/delete?practice_id=".$practice_d
                                     ?>
 
                                     <a href="<?php echo "default/" . PracticeHelper::Get_practice_contract_action_url( $subscription->practice_assn ); ?>"
-                                       class="btn <?php echo $class; ?>" title="<?php echo "asd" ?>">
+                                       class="btn <?php echo $class; ?>" title="">
                                         <?php echo Yii::t("app", "Contract"); ?>
                                     </a>
                                 <?php

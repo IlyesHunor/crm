@@ -57,6 +57,6 @@ use yii\helpers\Url;
 
         <input type="hidden" value="" name="signing-image">
         <input type="hidden" value="company_sign" name="type">
-        <input type="submit" value="<?php echo Yii::t( "app", "Save" ); ?>" class="btn btn-primary">
+        <input type="submit" value="<?php echo Yii::t( "app", "Save" ); ?>" class="btn btn-success">
     </form>
 </div>

@@ -37,15 +37,9 @@ if( empty( $practices ) )
                     </span>
                 </div>
 
-                <div class="intro">
-                    <span>
-                        <?php echo $practice->description; ?>
-                    </span>
-                </div>
-
                 <div class="dates">
                     <span>
-                        <?php echo Yii::t( "app", "Start" ) . " : " . $start_date; ?>
+                        <?php echo Yii::t( "app", "Start_date" ) . " : " . $start_date; ?>
                     </span>
                     <span>
                         <?php echo Yii::t( "app", "End_date" ) . " : " . $end_date; ?>
@@ -59,9 +53,11 @@ if( empty( $practices ) )
                 {
                 ?>
                     <a href="<?php echo $edit_url; ?>" class="btn btn-primary">
+                        <i class="icon-edit">&nbsp;</i>
                         <?php echo Yii::t( "app", "Modify" ); ?>
                     </a>
-                    <a href="<?php echo $delete_url; ?>" class="btn btn-danger">
+                    <a href="<?php echo $delete_url; ?>" class="btn btn-danger confirm-delete">
+                        <i class="icon-delete">&nbsp;</i>
                         <?php echo Yii::t( "app", "Delete" ); ?>
                     </a>
                 <?php
@@ -69,6 +65,7 @@ if( empty( $practices ) )
                 ?>
 
                 <a href="<?php echo $view_url; ?>" class="btn btn-info">
+                    <i class="icon-view">&nbsp;</i>
                     <?php echo Yii::t( "app", "View" ); ?>
                 </a>
 
