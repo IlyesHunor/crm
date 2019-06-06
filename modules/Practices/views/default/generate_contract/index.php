@@ -67,6 +67,7 @@ use yii\helpers\Url;
             <a href="javascript:void(0)" class="btn btn-success download_pdf"
                 data-practice-assn-id="<?php echo $practice_assn->id; ?>">
                 <?php echo Yii::t( "app", "Download_pdf" ); ?>
+                <i class="icon-download">&nbsp;</i>
             </a>
         <?php
         }

@@ -332,4 +332,63 @@ class AjaxController extends FrontSideController
 
         $model->updateAttributes( $data );
     }
+
+    public function actionChange_user_status()
+    {
+        $result = array( "status" => "error" );
+
+
+        $this->Validate_and_load_user( $result );
+        $this->Change_user_status();
+
+        $result["status"] = "success";
+
+        $this->Show_result_with_json( $result );
+    }
+
+    private function Validate_and_load_user( $result )
+    {
+        $user_id = PostHelper::Get_integer( "user_id" );
+
+        if( empty( $user_id ) )
+        {
+            $result["message"] = Yii::t( "app", "User_not_found" );
+
+            $this->Show_result_with_json( $result );
+        }
+
+        $user = UsersModel::Get_by_item_id_for_admin( $user_id );
+
+        if( empty( $user ) )
+        {
+            $result["message"] = Yii::t( "app", "User_not_found" );
+
+            $this->Show_result_with_json( $result );
+        }
+
+        $this->data["user"] = $user;
+    }
+
+    private function Change_user_status()
+    {
+        if( empty( $this->data["user"] ) )
+        {
+            return;
+        }
+
+        $model = UsersModel::Get_by_item_id_for_admin( $this->data["user"]->id );
+
+        if( empty( $model ) )
+        {
+            return;
+        }
+
+        $data = array(
+            "modified_user_id"  => UserHelper::Get_user_id(),
+            "modify_date"       => DateHelper::Get_datetime(),
+            "is_enabled"        => ! intval( $this->data["user"]->is_enabled )
+        );
+
+        $model->updateAttributes( $data );
+    }
 }

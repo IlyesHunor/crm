@@ -9,6 +9,8 @@ $(document).ready(function ()
     init_select_company_thesis_item();
     init_tabs();
     init_add_student_to_thesis();
+    init_enable_or_disable_users();
+    init_sidebar_button();
 
     $('#sidebarCollapse').on('click', function () {
         $('#sidebar').toggleClass('active');
@@ -385,4 +387,69 @@ function add_student_to_thesis( parameters )
         },
         "json"
     );
+}
+
+function init_enable_or_disable_users()
+{
+    $( ".enable-user" ).click(function(){
+        $( "#overlay" ).show();
+
+        let parameters = get_parameters_for_change_user_status( this );
+
+        change_user_status( parameters, this );
+    });
+}
+
+function get_parameters_for_change_user_status( item )
+{
+    let parameters          = {}
+    parameters["user_id"]   = $( item ).attr( "data-user-id" );
+
+    return parameters;
+}
+
+function change_user_status( parameters, item )
+{
+    send_post_request(
+        base_url + "/ajax/change_user_status",
+        parameters,
+        function( result ){
+            $( "#overlay" ).hide();
+
+            if( result.status != "success" )
+            {
+                return;
+            }
+
+            if( $( item ).hasClass( "btn-danger" ) )
+            {
+                $( item ).removeClass( "btn-danger" );
+                $( item ).addClass( "btn-success" );
+                $( item ).html( enabled );
+
+                return;
+            }
+
+            $( item ).removeClass( "btn-success" );
+            $( item ).addClass( "btn-danger" );
+            $( item ).html( disabled );
+        },
+        "json"
+    );
+}
+
+function init_sidebar_button()
+{
+    $( ".sidebar-button" ).click(function(){
+        if( $( this ).attr( "data-is-opened" ) == "1" )
+        {
+            $( "#sidebar" ).hide( "slow" );
+            $( this ).attr( "data-is-opened", 0 );
+
+            return;
+        }
+
+        $( this ).attr( "data-is-opened", 1 )
+        $( "#sidebar" ).show( "slow" );
+    });
 }

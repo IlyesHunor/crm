@@ -12,7 +12,6 @@ use app\modules\Theses\models\ThesesModel;
 use app\modules\Users\helpers\UserHelper;
 use app\modules\Users\models\UsersModel;
 use Yii;
-use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 
@@ -20,6 +19,7 @@ class FrontSideController extends Controller
 {
     public $data                = array();
     public $default_date_format = "Y-m-d";
+    public $site_mail           = "ilyeshunor95@gmail.com";
 
     public function Render_view( $view )
     {
@@ -38,8 +38,6 @@ class FrontSideController extends Controller
         if( empty( $user_id ) )
         {
             $this->Set_error_message( Yii::t( "app", "User_not_found" ) );
-
-            die( "ok" );
         }
 
         $user = UsersModel::Get_by_item_id( $user_id );
@@ -47,9 +45,9 @@ class FrontSideController extends Controller
         if( empty( $user ) )
         {
             $this->Set_error_message( Yii::t( "app", "User_not_found" ) );
-
-            die( "ok2" );
         }
+
+        $this->data["user"] = $user;
 
         return true;
     }

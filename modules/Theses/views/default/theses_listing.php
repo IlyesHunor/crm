@@ -75,6 +75,7 @@ if( ! empty( $department->theses ) )
                         </select>
                         <a href="javascript:void(0)" class="btn btn-success add-student-to-thesis"
                             data-thesis-id="<?php echo $thesis->id; ?>">
+                            <i class="icon-save">&nbsp;</i>
                             <?php echo Yii::t( "app", "Select" ); ?>
                         </a>
                     <?php
@@ -91,6 +92,7 @@ if( ! empty( $department->theses ) )
                     {
                     ?>
                         <a href="<?php echo $edit_url; ?>" class="btn btn-primary">
+                            <i class="icon-edit">&nbsp;</i>
                             <?php echo Yii::t( "app", "Modify" ); ?>
                         </a>
                     <?php
@@ -104,6 +106,7 @@ if( ! empty( $department->theses ) )
                             {
                             ?>
                                 <a href="<?php echo $unsubscribe_url; ?>" class="btn btn-danger confirm-delete">
+                                    <i class="icon-delete">&nbsp;</i>
                                     <?php echo Yii::t( "app", "Unsubscribe" ); ?>
                                 </a>
                             <?php
@@ -112,6 +115,7 @@ if( ! empty( $department->theses ) )
                             {
                             ?>
                                 <a href="<?php echo $subscribe_url; ?>" class="btn btn-success">
+                                    <i class="icon-subscribe">&nbsp;</i>
                                     <?php echo Yii::t( "app", "Subscribe" ); ?>
                                 </a>
                             <?php

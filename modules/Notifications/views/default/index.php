@@ -22,7 +22,7 @@ if( empty( $notifications ) )
                 <?php echo Yii::t( "app", "Name" ); ?>
             </th>
             <th scope="col">
-                <?php echo Yii::t( "app", "Title" ); ?>
+                <?php echo Yii::t( "app", "Description" ); ?>
             </th>
             <th scope="col">
                 <?php echo Yii::t( "app", "Date" ); ?>

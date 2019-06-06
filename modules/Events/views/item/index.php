@@ -20,180 +20,203 @@ $delete_image_url   = EventHelper::Get_image_delete_url( $event_details );
 
     <form action="" method="post" enctype="multipart/form-data">
         <input type="hidden" name="<?php echo Yii::$app->request->csrfParam; ?>" value="<?php echo Yii::$app->request->csrfToken; ?>" />
-        <div class="form-group">
-            <div>
-                <label for="name">
-                    <?php echo Yii::t( "app", "Name" ); ?>
-                </label>
-            </div>
-            <div class="input-text">
-                <input type="text" name="name" id="name"
-                    value="<?php echo PostHelper::Get( "name", $event_details ); ?>"/>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div>
-                <label for="event_category">
-                    <?php echo Yii::t( "app", "Name" ); ?>
-                </label>
-            </div>
-            <div>
-                <select name="event_category_id" id="event_category">
-                    <?php
-                    if( ! empty( $event_categories ) )
-                    {
-                        $selected_category = PostHelper::Get_integer( "event_category_id", $event_details );
-
-                        foreach( $event_categories as $event_category )
-                        {
-                        ?>
-                            <option value="<?php echo $event_category->id; ?>"
-                                <?php echo ( ( $selected_category == $event_category->id ) ? 'selected="selected"' : "" ); ?>>
-                                <?php echo Yii::t( "app", $event_category->name ); ?>
-                            </option>
-                        <?php
-                        }
-                    }
-                    ?>
-                </select>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div>
-                <label for="country">
-                    <?php echo Yii::t( "app", "Country" ); ?>
-                </label>
-            </div>
-            <div class="input-text">
-                <input type="text" name="country" id="country"
-                    value="<?php echo PostHelper::Get( "country", $event_details ); ?>"/>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div>
-                <label for="city">
-                    <?php echo Yii::t( "app", "City" ); ?>
-                </label>
-            </div>
-            <div class="input-text">
-                <input type="text" name="city" id="city"
-                    value="<?php echo PostHelper::Get( "city", $event_details ); ?>"/>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div>
-                <label for="address">
-                    <?php echo Yii::t( "app", "Address" ); ?>
-                </label>
-            </div>
-            <div class="input-text">
-                <input type="text" name="address" id="address"
-                    value="<?php echo PostHelper::Get( "address", $event_details ); ?>"/>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div>
-                <label for="institution">
-                    <?php echo Yii::t( "app", "Institution" ); ?>
-                </label>
-            </div>
-            <div class="input-text">
-                <input type="text" name="institution" id="institution"
-                    value="<?php echo PostHelper::Get( "institution", $event_details ); ?>"/>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div>
-                <label for="start_date">
-                    <?php echo Yii::t( "app", "Start_date" ); ?>
-                </label>
-            </div>
-            <div class="input-text">
-                <input type="text" name="start_date" id="start_date"
-                    value="<?php echo PostHelper::Get( "start_date", $event_details ); ?>"/>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div>
-                <label for="end_date">
-                    <?php echo Yii::t( "app", "End_date" ); ?>
-                </label>
-            </div>
-            <div class="input-text">
-                <input type="text" name="end_date" id="end_date"
-                    value="<?php echo PostHelper::Get( "end_date", $event_details ); ?>"/>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div>
-                <label for="is_public">
-                    <?php echo Yii::t( "app", "Is_public" ); ?>
-                </label>
-            </div>
-            <div>
-                <input type="checkbox" name="is_public" id="is_public" value="1"
-                    <?php echo ( ! empty( $is_public ) ? 'checked="checked"' : "" ); ?>/>
-            </div>
-        </div>
-
-        <?php
-        if( ! empty( $event_details ) )
-        {
-        ?>
-            <div class="form-group">
-                <div>
-                    <label for="image">
+        <div id="tabs">
+            <ul>
+                <li>
+                    <a href="#tab1">
+                        <?php echo Yii::t( "app", "Details" ); ?>
+                    </a>
+                </li>
+                <li>
+                    <a href="#tab2">
+                        <?php echo Yii::t( "app", "Description" ); ?>
+                    </a>
+                </li>
+                <li>
+                    <a href="#tab3">
                         <?php echo Yii::t( "app", "Image" ); ?>
-                    </label>
-                </div>
-                <div>
-                    <input type="file" name="image" id="image"
-                        value="<?php echo PostHelper::Get( "image", $event_details ); ?>"/>
-                </div>
-            </div>
+                    </a>
+                </li>
+            </ul>
 
-            <?php
-            if( ! empty( $event_details->image ) )
-            {
-            ?>
+            <div id="tab1">
                 <div class="form-group">
-                    <div class="image-preview">
-                        <img src="<?php echo Yii::getAlias( "@imgUrl" ) . $event_details->image; ?>" alt />
+                    <div>
+                        <label for="name">
+                            <?php echo Yii::t( "app", "Name" ); ?>
+                        </label>
+                    </div>
+                    <div class="input-text">
+                        <input type="text" name="name" id="name"
+                               value="<?php echo PostHelper::Get( "name", $event_details ); ?>"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div>
+                        <label for="event_category">
+                            <?php echo Yii::t( "app", "Category" ); ?>
+                        </label>
                     </div>
                     <div>
-                        <a href="<?php echo $delete_image_url; ?>" class="btn btn-danger">
-                            <?php echo Yii::t( "app", "Delete_image" ); ?>
-                        </a>
+                        <select name="event_category_id" id="event_category">
+                            <?php
+                            if( ! empty( $event_categories ) )
+                            {
+                                $selected_category = PostHelper::Get_integer( "event_category_id", $event_details );
+
+                                foreach( $event_categories as $event_category )
+                                {
+                                    ?>
+                                    <option value="<?php echo $event_category->id; ?>"
+                                        <?php echo ( ( $selected_category == $event_category->id ) ? 'selected="selected"' : "" ); ?>>
+                                        <?php echo Yii::t( "app", $event_category->name ); ?>
+                                    </option>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </select>
                     </div>
                 </div>
-            <?php
-            }
-            ?>
-        <?php
-        }
-        ?>
 
-        <div class="form-group">
-            <div>
-                <label for="description">
-                    <?php echo Yii::t( "app", "Description" ); ?>
-                </label>
+                <div class="form-group">
+                    <div>
+                        <label for="country">
+                            <?php echo Yii::t( "app", "Country" ); ?>
+                        </label>
+                    </div>
+                    <div class="input-text">
+                        <input type="text" name="country" id="country"
+                               value="<?php echo PostHelper::Get( "country", $event_details ); ?>"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div>
+                        <label for="city">
+                            <?php echo Yii::t( "app", "City" ); ?>
+                        </label>
+                    </div>
+                    <div class="input-text">
+                        <input type="text" name="city" id="city"
+                               value="<?php echo PostHelper::Get( "city", $event_details ); ?>"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div>
+                        <label for="address">
+                            <?php echo Yii::t( "app", "Address" ); ?>
+                        </label>
+                    </div>
+                    <div class="input-text">
+                        <input type="text" name="address" id="address"
+                               value="<?php echo PostHelper::Get( "address", $event_details ); ?>"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div>
+                        <label for="institution">
+                            <?php echo Yii::t( "app", "Institution" ); ?>
+                        </label>
+                    </div>
+                    <div class="input-text">
+                        <input type="text" name="institution" id="institution"
+                               value="<?php echo PostHelper::Get( "institution", $event_details ); ?>"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div>
+                        <label for="start_date">
+                            <?php echo Yii::t( "app", "Start_date" ); ?>
+                        </label>
+                    </div>
+                    <div class="input-text">
+                        <input type="text" name="start_date" id="start_date"
+                               value="<?php echo PostHelper::Get( "start_date", $event_details ); ?>"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div>
+                        <label for="end_date">
+                            <?php echo Yii::t( "app", "End_date" ); ?>
+                        </label>
+                    </div>
+                    <div class="input-text">
+                        <input type="text" name="end_date" id="end_date"
+                               value="<?php echo PostHelper::Get( "end_date", $event_details ); ?>"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div>
+                        <label for="is_public">
+                            <?php echo Yii::t( "app", "Is_public" ); ?>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="is_public" id="is_public" value="1"
+                            <?php echo ( ! empty( $is_public ) ? 'checked="checked"' : "" ); ?>/>
+                    </div>
+                </div>
             </div>
-            <div>
-                <textarea name="description" id="description"><?php echo PostHelper::Get("description", $event_details ) ?></textarea>
+            <div id="tab2">
+                <div class="form-group">
+                    <div>
+                        <label for="description">
+                            <?php echo Yii::t( "app", "Description" ); ?>
+                        </label>
+                    </div>
+                    <div class="textarea">
+                        <textarea name="description" id="description"><?php echo PostHelper::Get("description", $event_details ) ?></textarea>
+                    </div>
+                </div>
+            </div>
+            <div id="tab3">
+                <?php
+                if( ! empty( $event_details ) )
+                {
+                ?>
+                    <div class="form-group">
+                        <div>
+                            <label for="image">
+                                <?php echo Yii::t( "app", "Image" ); ?>
+                            </label>
+                        </div>
+                        <div>
+                            <input type="file" name="image" id="image"
+                                   value="<?php echo PostHelper::Get( "image", $event_details ); ?>"/>
+                        </div>
+                    </div>
+
+                    <?php
+                    if( ! empty( $event_details->image ) )
+                    {
+                        ?>
+                        <div class="form-group">
+                            <div class="image-preview">
+                                <img src="<?php echo Yii::getAlias( "@imgUrl" ) . $event_details->image; ?>" alt />
+                            </div>
+                            <div>
+                                <a href="<?php echo $delete_image_url; ?>" class="btn btn-danger">
+                                    <?php echo Yii::t( "app", "Delete_image" ); ?>
+                                </a>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                }
+                ?>
             </div>
         </div>
 
+
         <div>
-            <input type="submit" class="btn btn-primary" value="<?php echo Yii::t( "app", "Save" ); ?>">
+            <input type="submit" class="btn btn-success" value="<?php echo Yii::t( "app", "Save" ); ?>">
             <a href="<?php echo $last_url; ?>" class="btn btn-danger">
                 <?php echo Yii::t( "app", "Back" ); ?>
             </a>

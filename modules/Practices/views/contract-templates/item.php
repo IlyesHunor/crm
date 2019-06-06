@@ -39,6 +39,6 @@ use yii\helpers\Url;
             </div>
         </div>
 
-        <input type="submit" value="<?php echo Yii::t( "app", "Save" ); ?>" class="btn btn-primary">
+        <input type="submit" value="<?php echo Yii::t( "app", "Save" ); ?>" class="btn btn-success">
     </form>
 </div>

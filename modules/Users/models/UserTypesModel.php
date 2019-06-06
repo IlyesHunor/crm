@@ -18,6 +18,8 @@ use Yii;
  */
 class UserTypesModel extends \yii\db\ActiveRecord
 {
+
+    public $users;
     /**
      * @inheritdoc
      */
@@ -66,5 +68,16 @@ class UserTypesModel extends \yii\db\ActiveRecord
                 )
             )
             ->one();
+    }
+
+    public static function Get_list()
+    {
+        return self::find()
+            ->andOnCondition(
+                array(
+                    "is_deleted" => 0,
+                )
+            )
+            ->all();
     }
 }

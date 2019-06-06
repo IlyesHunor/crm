@@ -3,9 +3,9 @@
 </nav>
 
 <div class="content with-sidebar">
-    <h3>
+    <h1>
         <?php echo Yii::t( "app", "Theses" ); ?>
-    </h3>
+    </h1>
 
     <div id="tabs">
         <ul>

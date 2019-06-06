@@ -191,7 +191,7 @@ use yii\helpers\Url;
                         </div>
 
                         <div>
-                            <input type="submit" class="btn btn-primary" value="<?php echo Yii::t( "app", "Save" ); ?>">
+                            <input type="submit" class="btn btn-success" value="<?php echo Yii::t( "app", "Save" ); ?>">
                         </div>
                     </form>
                 </div>

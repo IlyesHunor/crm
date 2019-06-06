@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use app\helpers\PermissionHelper;
 use app\modules\Notifications\helpers\NotificationHelper;
 use app\modules\Notifications\models\NotificationsModel;
 use app\modules\Users\helpers\UserHelper;use app\widgets\Alert;
@@ -30,6 +31,8 @@ AppAsset::register($this);
     <script type="text/javascript">
         const base_url      = "<?php echo BaseUrl::base() ?>";
         const are_you_sure  = "<?php echo Yii::t( "app", "Are_you_sure?" ); ?>";
+        const enabled       = "<?php echo Yii::t( "app", "Enabled" ); ?>";
+        const disabled      = "<?php echo Yii::t( "app", "Disabled" ); ?>";
     </script>
     <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
@@ -44,7 +47,7 @@ $has_notifications      = NotificationHelper::Has_unreaded_notifications();
 $notifications          = NotificationHelper::Get_notifications_list();
 $class                  = "notifications";
 $class                  .= ( ! empty( $has_notifications ) ? " has-notifications" : "" );
-$class_navigation_home  = $class_navigation_theses = $class_navigation_practices = $class_navigation_events = $class_navigation_notifications = "";
+$class_navigation_home  = $class_navigation_theses = $class_navigation_practices = $class_navigation_events = $class_navigation_notifications = $class_navigation_users = "";
 $selected_module        = Yii::$app->controller->module->id;
 
 switch( $selected_module )
@@ -60,6 +63,9 @@ switch( $selected_module )
         break;
     case "notifications":
         $class_navigation_notifications = "active";
+        break;
+    case "users":
+        $class_navigation_users = "active";
         break;
     default:
         $class_navigation_home = "active";
@@ -83,6 +89,11 @@ switch( $selected_module )
             '<li class="' . $class_navigation_practices . '"><a href="'. Url::toRoute( ["/practices"] ) .'">' . Yii::t( "app", "Practices" ) . '</a></li>',
             '<li class="' . $class_navigation_theses . '"><a href="'. Url::toRoute( ["/theses"] ) .'">' . Yii::t( "app", "Theses" ) . '</a></li>',
             '<li class="' . $class_navigation_events . '"><a href="'. Url::toRoute( ["/events"] ) .'">' . Yii::t( "app", "Events" ) . '</a></li>',
+            PermissionHelper::Is_admin() ? (
+                '<li class="' . $class_navigation_users . '"><a href="'. Url::toRoute( ["/users"] ) .'">' . Yii::t( "app", "Users" ) . '</a></li>'
+            ) : (
+                    ""
+            ),
             '<li class="'. $class . " " . $class_navigation_notifications.'">'.
                 '<a id="notification-button">'.
                     Yii::t( "app", "Notifications" ).
@@ -100,7 +111,7 @@ switch( $selected_module )
                 '<li>'
                 . Html::beginForm( ['/users/logout'], 'post' )
                 . Html::submitButton(
-                    'Logout (' . UserHelper::Get_user_name() . ')',
+                    Yii::t( "app", "Logout" ) . '(' . UserHelper::Get_user_name() . ')',
                     ['class' => 'btn btn-link logout']
                 )
                 . Html::endForm()
@@ -112,6 +123,9 @@ switch( $selected_module )
     ?>
 
     <div class="container">
+        <div class="sidebar-button" data-is-opened="0">
+            <img src="<?php echo Url::toRoute( "/assets/images/icon_menu.png" ); ?>" alt="">
+        </div>
         <?php echo Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
