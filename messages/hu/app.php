@@ -143,4 +143,9 @@ return
     "View_all_events"               => "Összes esemény megtekintése",
     "View_all_practices"            => "Összes nyárigyakorlat megtekintése",
     "Details"                       => "Részletek",
+    "Incorrect_login"               => "Helytelen email cím vagy jelszó",
+    "Contract"                      => "Szerződés",
+    "Contract_was_generated_title"  => "Új Szerződés",
+    "Name_of_student"               => "Hallgató neve",
+    "Files"                         => "Állományok",
 ];

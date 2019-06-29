@@ -21,9 +21,9 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
-        <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'username')->textInput(['placeholder'=>Yii::t( "app", "Email" )]) ?>
 
-        <?= $form->field($model, 'password')->passwordInput() ?>
+        <?= $form->field($model, 'password')->passwordInput(['placeholder'=>Yii::t( "app", "Password" )]) ?>
 
         <div class="form-group">
             <div class="col-lg-offset-1 col-lg-11">

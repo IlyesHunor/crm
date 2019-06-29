@@ -2,6 +2,7 @@
 
 namespace app\modules\Notifications\models;
 
+use app\models\CommonModel;
 use Yii;
 
 /**
@@ -19,7 +20,7 @@ use Yii;
  * @property int $is_viewed
  * @property int $is_deleted
  */
-class NotificationsModel extends \yii\db\ActiveRecord
+class NotificationsModel extends CommonModel
 {
     /**
      * @inheritdoc
@@ -42,6 +43,7 @@ class NotificationsModel extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 255],
             [['link'], 'string', 'max' => 512],
             [['is_viewed', 'is_deleted'], 'string', 'max' => 4],
+            [['title', 'name', 'link'], 'xss_clean']
         ];
     }
 

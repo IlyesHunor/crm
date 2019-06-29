@@ -2,6 +2,7 @@
 
 namespace app\modules\Practices\models;
 
+use app\models\CommonModel;
 use Yii;
 
 /**
@@ -27,7 +28,7 @@ use Yii;
  * @property int $is_enabled
  * @property int $is_deleted
  */
-class PracticesModel extends \yii\db\ActiveRecord
+class PracticesModel extends CommonModel
 {
     public $assn_details;
     /**
@@ -50,6 +51,7 @@ class PracticesModel extends \yii\db\ActiveRecord
             [['start_date', 'end_date', 'deadline_date', 'insert_date', 'modify_date'], 'date', 'format' => 'php:Y-m-d'],
             [['name', 'country', 'city', 'address'], 'string', 'max' => 255],
             [['is_enabled', 'is_deleted'], 'integer', 'max' => 1],
+            [['name', 'description', 'start_date', 'end_date', 'deadline_date', 'address', 'country', 'city'], 'xss_clean']
         ];
     }
 

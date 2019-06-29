@@ -93,6 +93,8 @@ class FrontSideController extends Controller
             return false;
         }
 
+        $this->data["practice_id"] = $practice->practice_id;
+
         return true;
     }
 

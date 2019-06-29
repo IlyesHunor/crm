@@ -129,7 +129,6 @@ class AjaxController extends FrontSideController
         $pdf->loadHtml( $html );
         $pdf->setPaper( "A4", "portrait" );
         $pdf->render();
-        //$pdf->stream();
 
         return $pdf->output();
     }

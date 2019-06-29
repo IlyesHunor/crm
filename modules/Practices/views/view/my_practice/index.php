@@ -155,7 +155,7 @@ use yii\helpers\Url;
                         <div class="form-group">
                             <div>
                                 <label for="report">
-                                    <?php echo Yii::t( "app", "Upload" ); ?>
+                                    <?php echo Yii::t( "app", "Report" ); ?>
                                 </label>
                             </div>
                             <div>

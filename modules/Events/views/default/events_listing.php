@@ -36,12 +36,6 @@ if( empty( $events ) )
 
                 <div>
                     <span>
-                        <?php echo $event->description; ?>
-                    </span>
-                </div>
-
-                <div>
-                    <span>
                         <?php echo $start_date . " : " . $end_date; ?>
                     </span>
                 </div>

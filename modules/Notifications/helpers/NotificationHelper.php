@@ -13,7 +13,7 @@ class NotificationHelper
 {
     public static function Get_notification_name_for_generated_contract()
     {
-        return Yii::t( "app", "Generated_contract" );
+        return Yii::t( "app", "Contract" );
     }
 
     public static function Get_notification_title( $practice_details, $student_details )
@@ -25,7 +25,6 @@ class NotificationHelper
             return $text;
         }
 
-        $text   .= " " . Yii::t( "app", "Name_of_practice" ) . ": " . $practice_details->name . "<br>";
         $text   .= " " . Yii::t( "app", "Name_of_student" ) . ": " . UserHelper::Get_user_name_by_user( $student_details );
 
         return $text;

@@ -2,7 +2,7 @@
     <div style="display: inline-block; font-size: 16px; width: 50%">
         <div>
             <span>
-                <?php echo Yii::t( "app", "Signing_teacher" ); ?>
+                <?php echo Yii::t( "app", "Universitate" ); ?>
             </span>
         </div>
         <?php
@@ -17,7 +17,7 @@
     <div style="display: inline-block; font-size: 16px; width: 50%; text-align: right;">
         <div>
             <span>
-                <?php echo Yii::t( "app", "Signing_company" ); ?>
+                <?php echo Yii::t( "app", "Compania" ); ?>
             </span>
         </div>
         <?php

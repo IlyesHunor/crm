@@ -2,6 +2,7 @@
 $template_details   = ( ! empty( $template_details ) ? $template_details : "" );
 $contract_template  = ( ! empty( $practice_assn ) && ! empty( $practice_assn->contract ) ? $practice_assn->contract : $template_details->text );
 use app\helpers\PostHelper;
+use app\modules\Practices\helpers\PracticeHelper;
 use yii\helpers\Url;
 
 ?>
@@ -57,6 +58,18 @@ use yii\helpers\Url;
 
         <input type="hidden" value="" name="signing-image">
         <input type="hidden" value="company_sign" name="type">
-        <input type="submit" value="<?php echo Yii::t( "app", "Save" ); ?>" class="btn btn-success">
+        <input type="submit" value="<?php echo Yii::t( "app", "Save" ); ?>" class="btn btn-primary">
+        <?php
+        if( PracticeHelper::Is_contract_generated( $practice_assn ) )
+        {
+        ?>
+            <a href="javascript:void(0)" class="btn btn-success download_pdf"
+               data-practice-assn-id="<?php echo $practice_assn->id; ?>">
+                <?php echo Yii::t( "app", "Download_pdf" ); ?>
+                <i class="icon-download">&nbsp;</i>
+            </a>
+        <?php
+        }
+        ?>
     </form>
 </div>
