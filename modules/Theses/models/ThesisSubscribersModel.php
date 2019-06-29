@@ -2,6 +2,7 @@
 
 namespace app\modules\Theses\models;
 
+use app\models\CommonModel;
 use Yii;
 
 /**
@@ -18,7 +19,7 @@ use Yii;
  * @property int $is_enabled
  * @property int $is_deleted
  */
-class ThesisSubscribersModel extends \yii\db\ActiveRecord
+class ThesisSubscribersModel extends CommonModel
 {
     /**
      * @inheritdoc

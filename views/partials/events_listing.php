@@ -34,12 +34,6 @@ if( empty( $events ) )
                     </span>
                 </div>
 
-                <div class="intro">
-                    <span>
-                        <?php echo $event->description; ?>
-                    </span>
-                </div>
-
                 <div class="dates">
                     <span>
                         <?php echo Yii::t( "app", "Start_date" ) . " : " . $start_date; ?>

@@ -2,6 +2,7 @@
 
 namespace app\modules\Users\models;
 
+use app\models\CommonModel;
 use Yii;
 
 /**
@@ -18,7 +19,7 @@ use Yii;
  * @property int $is_enabled
  * @property int $is_deleted
  */
-class DepartmentsModel extends \yii\db\ActiveRecord
+class DepartmentsModel extends CommonModel
 {
     public $years;
     public $theses;

@@ -2,6 +2,7 @@
 
 namespace app\modules\Users\models;
 
+use app\models\CommonModel;
 use Yii;
 
 /**
@@ -16,7 +17,7 @@ use Yii;
  * @property int $is_enabled
  * @property int $is_deleted
  */
-class UserTypesModel extends \yii\db\ActiveRecord
+class UserTypesModel extends CommonModel
 {
 
     public $users;

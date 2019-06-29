@@ -2,6 +2,7 @@
 
 namespace app\modules\Theses\models;
 
+use app\models\CommonModel;
 use Yii;
 
 /**
@@ -22,7 +23,7 @@ use Yii;
  * @property int $is_enabled
  * @property int $is_deleted
  */
-class ThesesModel extends \yii\db\ActiveRecord
+class ThesesModel extends CommonModel
 {
     public $subscribers;
 
@@ -46,6 +47,7 @@ class ThesesModel extends \yii\db\ActiveRecord
             [['insert_date', 'modify_date'], 'safe'],
             [['name'], 'string', 'max' => 255],
             [['is_enabled', 'is_deleted'], 'string', 'max' => 4],
+            [['name', 'description'], 'xss_clean']
         ];
     }
 

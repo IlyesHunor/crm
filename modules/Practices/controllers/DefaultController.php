@@ -4,6 +4,7 @@ namespace app\modules\Practices\controllers;
 
 use app\controllers\FrontSideController;
 use app\helpers\DateHelper;
+use app\helpers\GetHelper;
 use app\helpers\ImageUploader;
 use app\helpers\PermissionHelper;
 use app\helpers\PostHelper;
@@ -169,12 +170,12 @@ class DefaultController extends FrontSideController
 
     private function Check_is_companies_practice()
     {
-        if( empty( $this->data["practice_details"] ) )
+        if( empty( $this->data["practice_id"] ) )
         {
             return false;
         }
 
-        $practice = PracticesModel::Get_by_item_id( $this->data["practice_details"]->practice_id );
+        $practice = PracticesModel::Get_by_item_id( $this->data["practice_id"] );
 
         if( empty( $practice ) )
         {
@@ -198,7 +199,7 @@ class DefaultController extends FrontSideController
 
     private function Load_contract_template()
     {
-        $this->data["template_details"] = ContractTemplatesModel::Get_by_item_id( 1 );
+        $this->data["template_details"] = ContractTemplatesModel::Get_by_item_id( 3 );
     }
 
     private function Handle_post_generate()

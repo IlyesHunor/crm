@@ -36,6 +36,7 @@ if( ! empty( $department->theses ) )
         <?php
         foreach( $department->theses as $index => $thesis )
         {
+            $view_url       = Yii::getAlias("@imgUrl") . $thesis->file;
             $edit_url       = ThesisHelper::Get_edit_url( $thesis );
             $subscribe_url  = ThesisHelper::Get_subrscribe_url( $thesis );
             $unsubscribe_url= ThesisHelper::Get_unsubrscribe_url( $thesis );
@@ -87,6 +88,18 @@ if( ! empty( $department->theses ) )
                     ?>
                 </td>
                 <td scope="col">
+                    <?php
+                    if( ! PermissionHelper::Can_modify( $thesis ) )
+                    {
+                    ?>
+                        <a href="<?php echo $view_url; ?>" class="btn btn-info fancybox" data-fancybox="gallery">
+                            <i class="icon-view">&nbsp;</i>
+                            <?php echo Yii::t( "app", "View" ); ?>
+                        </a>
+                    <?php
+                    }
+                    ?>
+
                     <?php
                     if( PermissionHelper::Can_modify( $thesis ) )
                     {

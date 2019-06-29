@@ -18,7 +18,7 @@ class EventHelper
             return false;
         }
 
-        return Url::toRoute( ["/events/view?id=$event->id"] );
+        return Url::toRoute( ["/events/view?event_id=$event->id"] );
     }
 
     public static function Get_edit_url( $event )

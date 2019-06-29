@@ -1,6 +1,6 @@
 <?php
-$template_details   = ( ! empty( $template_details ) ? $template_details : "" );
-$contract_template  = ( ! empty( $practice_assn ) && ! empty( $practice_assn->contract ) ? $practice_assn->contract : $template_details->text );
+$template_details   = ( ! empty( $template_details ) ? $template_details->text : "" );
+$contract_template  = ( ! empty( $practice_assn ) && ! empty( $practice_assn->contract ) ? $practice_assn->contract : $template_details );
 use app\helpers\PostHelper;
 use app\modules\Practices\helpers\PracticeHelper;
 use yii\helpers\Url;

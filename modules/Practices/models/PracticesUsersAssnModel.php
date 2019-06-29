@@ -2,6 +2,7 @@
 
 namespace app\modules\Practices\models;
 
+use app\models\CommonModel;
 use Yii;
 
 /**
@@ -24,7 +25,7 @@ use Yii;
  * @property int $is_enabled
  * @property int $is_deleted
  */
-class PracticesUsersAssnModel extends \yii\db\ActiveRecord
+class PracticesUsersAssnModel extends CommonModel
 {
     /**
      * @inheritdoc

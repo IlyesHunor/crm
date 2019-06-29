@@ -2,6 +2,7 @@
 
 namespace app\modules\Users\models;
 
+use app\models\CommonModel;
 use Yii;
 
 /**
@@ -10,6 +11,7 @@ use Yii;
  * @property string $id
  * @property string $added_user_id
  * @property string $modified_user_id
+ * @property string $user_id
  * @property string $name
  * @property string $code
  * @property string $insert_date
@@ -17,7 +19,7 @@ use Yii;
  * @property int $is_enabled
  * @property int $is_deleted
  */
-class CompaniesModel extends \yii\db\ActiveRecord
+class CompaniesModel extends CommonModel
 {
     /**
      * @inheritdoc
@@ -65,6 +67,19 @@ class CompaniesModel extends \yii\db\ActiveRecord
             ->andOnCondition(
                 array(
                     "id"        => $company_id,
+                    "is_enabled"=> 1,
+                    "is_deleted"=> 0
+                )
+            )
+            ->one();
+    }
+
+    public static function Get_by_user_id( $user_id )
+    {
+        return self::find()
+            ->andOnCondition(
+                array(
+                    "user_id"   => $user_id,
                     "is_enabled"=> 1,
                     "is_deleted"=> 0
                 )

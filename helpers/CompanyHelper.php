@@ -16,4 +16,14 @@ class CompanyHelper extends FrontSideController
 
         return CompaniesModel::Get_by_item_id( $company_id )->name;
     }
+
+    public static function Get_company_id_by_user( $user_id )
+    {
+        if( empty( $user_id ) )
+        {
+            return "";
+        }
+
+        return CompaniesModel::Get_by_user_id( $user_id )->id;
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace app\modules\Practices\models;
 
+use app\models\CommonModel;
 use Yii;
 
 /**
@@ -17,7 +18,7 @@ use Yii;
  * @property int $is_enabled
  * @property int $is_deleted
  */
-class PracticeSubscribersModel extends \yii\db\ActiveRecord
+class PracticeSubscribersModel extends CommonModel
 {
     public $practice_name;
     public $first_name;

@@ -3,6 +3,7 @@
 namespace app\modules\Practices\controllers;
 
 use app\controllers\FrontSideController;
+use app\helpers\CompanyHelper;
 use app\helpers\DateHelper;
 use app\helpers\GetHelper;
 use app\helpers\ImageUploader;
@@ -158,6 +159,7 @@ class ItemController extends FrontSideController
     {
         $data = array(
             "user_id"           => UserHelper::Get_user_id(),
+            "company_id"        => CompanyHelper::Get_company_id_by_user( UserHelper::Get_user_id() ),
             "name"              => PostHelper::Get( "name" ),
             "country"           => PostHelper::Get( "country" ),
             "city"              => PostHelper::Get( "city" ),
